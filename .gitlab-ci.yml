@@ -23,7 +23,9 @@ cache:
 
 build:hugo:
   stage: build
-  image: klakegg/hugo:ext-alpine
+  image: 
+    name: klakegg/hugo:ext-alpine
+    entrypoint: [""]  # Override the entrypoint to allow shell commands
   script:
     - hugo version
     - hugo --config="config/config.toml" --gc --minify
@@ -137,3 +139,5 @@ deploy:production-rsync:
   only:
     - main
   when: manual
+
+

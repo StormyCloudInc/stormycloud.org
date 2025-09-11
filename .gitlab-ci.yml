@@ -1,16 +1,25 @@
 # GitLab CI/CD - Combined Pipeline
-# Deployment runs on push, Security runs on schedule
+# Deployment runs on push to main, Security runs on schedule and optionally on main
 
 stages:
   - build
   - test
+  - security-scan
   - deploy
   - dast
 
 # ============================================
-# Deployment Jobs (run on push to main)
+# Variables
 # ============================================
+variables:
+  SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/security-products"
+  DS_EXCLUDED_ANALYZERS: ""
+  SAST_EXCLUDED_ANALYZERS: ""
+  SECRET_DETECTION_EXCLUDED_ANALYZERS: ""
 
+# ============================================
+# Build Job
+# ============================================
 build:
   stage: build
   image: alpine:latest
@@ -22,14 +31,108 @@ build:
   artifacts:
     paths:
       - site.tar.gz
+      - public/  # Keep public directory for security scanning
     expire_in: 1 day
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: never
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success
 
-deploy:
+# ============================================
+# Test Stage (optional - add your tests here)
+# ============================================
+test:unit:
+  stage: test
+  image: alpine:latest
+  script:
+    - echo "Add your unit tests here"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success
+  allow_failure: true
+
+# ============================================
+# Security Scanning Templates
+# ============================================
+include:
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
+
+# ============================================
+# Security Scanning Job Configurations
+# ============================================
+
+# Dependency Scanning - runs on schedule and optionally on main
+dependency_scanning:
+  stage: security-scan
+  extends: .ds-analyzer
+  variables:
+    DS_EXCLUDED_PATHS: "spec,test,tests,tmp,vendor"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - if: '$CI_COMMIT_BRANCH == "main" && $RUN_SECURITY_ON_DEPLOY == "true"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success
+    - when: never
+  allow_failure: true
+  artifacts:
+    reports:
+      dependency_scanning: gl-dependency-scanning-report.json
+    paths:
+      - gl-dependency-scanning-report.json
+    expire_in: 1 week
+
+# Secret Detection - runs on schedule and on main/MR
+secret_detection:
+  stage: security-scan
+  extends: .secret-analyzer
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success
+    - when: never
+  allow_failure: true
+  artifacts:
+    reports:
+      secret_detection: gl-secret-detection-report.json
+    paths:
+      - gl-secret-detection-report.json
+    expire_in: 1 week
+
+# SAST - runs on schedule and optionally on main
+semgrep-sast:
+  stage: security-scan
+  extends: .sast-analyzer
+  image: "$SECURE_ANALYZERS_PREFIX/semgrep:latest"
+  variables:
+    SAST_EXCLUDED_PATHS: "spec,test,tests,tmp,vendor"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - if: '$CI_COMMIT_BRANCH == "main" && $RUN_SECURITY_ON_DEPLOY == "true"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success
+    - when: never
+  allow_failure: true
+
+# ============================================
+# Deploy Job
+# ============================================
+deploy:production:
   stage: deploy
   image: alpine:latest
   dependencies:
@@ -42,9 +145,18 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan -p $I2P_SERVER_PORT -H $I2P_SERVER_IP >> ~/.ssh/known_hosts
   script:
-    - ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "sudo rm -rf /var/www/html/* && rm -f /tmp/site.tar.gz"
-    - scp -P $I2P_SERVER_PORT site.tar.gz $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/
-    - ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "cd /tmp && sudo tar -xzf site.tar.gz -C /var/www/html/ && sudo chown -R www-data:www-data /var/www/html/ && sudo chmod -R 755 /var/www/html/ && rm -f site.tar.gz"
+    - |
+      echo "Deploying to production server..."
+      ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "sudo rm -rf /var/www/html/* && rm -f /tmp/site.tar.gz"
+      scp -P $I2P_SERVER_PORT site.tar.gz $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/
+      ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "
+        cd /tmp && 
+        sudo tar -xzf site.tar.gz -C /var/www/html/ && 
+        sudo chown -R www-data:www-data /var/www/html/ && 
+        sudo chmod -R 755 /var/www/html/ && 
+        rm -f site.tar.gz
+      "
+      echo "Deployment completed successfully!"
   environment:
     name: production
     url: https://stormycloud.org
@@ -53,46 +165,70 @@ deploy:
       when: never
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: on_success
+    - when: never
+  only:
+    variables:
+      - $I2P_SERVER_SSH_KEY
+      - $I2P_SERVER_PORT
+      - $I2P_SERVER_IP
+      - $I2P_SERVER_USER
 
 # ============================================
-# Security Scanning Jobs (run on schedule only)
+# DAST (Dynamic Application Security Testing)
 # ============================================
-
-include:
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml
-
-# Override security jobs to only run on schedule
-dependency_scanning:
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-      when: on_success
-    - when: never
-
-secret_detection:
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-      when: on_success
-    - when: never
-
-sast:
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
-      when: on_success
-    - when: never
-
-# Custom DAST configuration for scheduled scans
-dast-scheduled:
+dast:scheduled:
   stage: dast
-  image: alpine:latest
-  script:
-    - echo "DAST scan would run here on ${DAST_WEBSITE}"
-    # You can add actual DAST scanning tools here
+  image: owasp/zap2docker-stable:latest
   variables:
     DAST_WEBSITE: "https://stormycloud.org"
+    ZAP_FULL_SCAN: "true"
+  script:
+    - |
+      echo "Starting DAST scan on ${DAST_WEBSITE}"
+      mkdir -p /zap/reports
+      # Run ZAP baseline scan (you can change to full scan if needed)
+      zap-baseline.py -t "${DAST_WEBSITE}" -r dast-report.html -J dast-report.json || true
+      echo "DAST scan completed"
+  artifacts:
+    reports:
+      dast: dast-report.json
+    paths:
+      - dast-report.html
+      - dast-report.json
+    expire_in: 1 week
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: on_success
+    - if: '$CI_COMMIT_BRANCH == "main" && $RUN_DAST_ON_DEPLOY == "true"'
+      when: manual
     - when: never
   allow_failure: true
+
+# ============================================
+# Optional: Deployment Smoke Test
+# ============================================
+smoke-test:
+  stage: dast
+  image: alpine:latest
+  dependencies: []
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - |
+      echo "Running smoke test on production..."
+      response=$(curl -s -o /dev/null -w "%{http_code}" https://stormycloud.org)
+      if [ "$response" = "200" ]; then
+        echo "✅ Site is responding correctly (HTTP $response)"
+      else
+        echo "❌ Site returned HTTP $response"
+        exit 1
+      fi
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
+    - when: never
+  needs:
+    - deploy:production
+  allow_failure: false

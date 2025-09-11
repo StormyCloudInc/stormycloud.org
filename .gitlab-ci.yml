@@ -1,12 +1,14 @@
-# GitLab CI/CD - Simple Deployment Pipeline
-# Just build and deploy - no BS
+# GitLab CI/CD - Combined Pipeline
+# Deployment runs on push, Security runs on schedule
 
 stages:
   - build
+  - test
   - deploy
+  - dast
 
 # ============================================
-# Build Hugo Site
+# Deployment Jobs (run on push to main)
 # ============================================
 
 build:
@@ -21,12 +23,11 @@ build:
     paths:
       - site.tar.gz
     expire_in: 1 day
-  only:
-    - main
-
-# ============================================
-# Deploy to Server
-# ============================================
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
 
 deploy:
   stage: deploy
@@ -41,14 +42,57 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan -p $I2P_SERVER_PORT -H $I2P_SERVER_IP >> ~/.ssh/known_hosts
   script:
-    # Clean, copy, extract
     - ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "sudo rm -rf /var/www/html/* && rm -f /tmp/site.tar.gz"
     - scp -P $I2P_SERVER_PORT site.tar.gz $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/
     - ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "cd /tmp && sudo tar -xzf site.tar.gz -C /var/www/html/ && sudo chown -R www-data:www-data /var/www/html/ && sudo chmod -R 755 /var/www/html/ && rm -f site.tar.gz"
   environment:
     name: production
     url: https://stormycloud.org
-  only:
-    - main
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
 
+# ============================================
+# Security Scanning Jobs (run on schedule only)
+# ============================================
 
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+
+# Override security jobs to only run on schedule
+dependency_scanning:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - when: never
+
+secret_detection:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - when: never
+
+sast:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - when: never
+
+# Custom DAST configuration for scheduled scans
+dast-scheduled:
+  stage: dast
+  image: alpine:latest
+  script:
+    - echo "DAST scan would run here on ${DAST_WEBSITE}"
+    # You can add actual DAST scanning tools here
+  variables:
+    DAST_WEBSITE: "https://stormycloud.org"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on_success
+    - when: never
+  allow_failure: true

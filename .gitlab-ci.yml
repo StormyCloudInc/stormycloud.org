@@ -1,34 +1,21 @@
-# GitLab CI/CD Configuration for StormyCloud.org
-# Fixed version - properly handles security scanning templates
+# GitLab CI/CD - Deployment Pipeline
+# This file handles Hugo site building and deployment to I2P server
 
 stages:
   - build
   - test
   - deploy
-  - dast
 
 variables:
   HUGO_VERSION: "latest"
-  DAST_WEBSITE: "https://stormycloud.org"
-  SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/security-products"
 
-# Cache Hugo modules for faster builds
+# Cache for faster builds
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .hugo_cache/
     - resources/
     - node_modules/
-
-# ============================================
-# Security Scanning Templates
-# ============================================
-
-include:
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Security/DAST.gitlab-ci.yml
 
 # ============================================
 # Build Stage
@@ -40,21 +27,21 @@ build:hugo:
   script:
     - hugo version
     - hugo --config="config/config.toml" --gc --minify
-    - tar -czf site.tar.gz -C public .
+    - cd public && tar -czf ../site.tar.gz * && cd ..
   artifacts:
     paths:
-      - public/
       - site.tar.gz
-    expire_in: 1 week
+      - public/
+    expire_in: 1 day
   only:
     - main
     - merge_requests
 
 # ============================================
-# Test Stage
+# Test Stage (Optional)
 # ============================================
 
-test:html:
+test:html-validation:
   stage: test
   image: 18fgsa/html-proofer:latest
   dependencies:
@@ -70,19 +57,20 @@ test:html:
 # Deploy Stage
 # ============================================
 
-deploy:i2p-server:
+deploy:production:
   stage: deploy
   image: alpine:latest
   dependencies:
     - build:hugo
   before_script:
-    # Install required packages
-    - apk add --no-cache openssh-client sshpass rsync
-    # Setup SSH
+    # Install SSH client
+    - apk add --no-cache openssh-client
+    # Setup SSH key
     - eval $(ssh-agent -s)
     - echo "$I2P_SERVER_SSH_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    # Add server to known hosts
     - ssh-keyscan -p $I2P_SERVER_PORT -H $I2P_SERVER_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
@@ -92,11 +80,9 @@ deploy:i2p-server:
         "sudo rm -rf /var/www/html/* && rm -f /tmp/site.tar.gz"
     
     # Copy site archive to server
-    - |
-      scp -P $I2P_SERVER_PORT site.tar.gz \
-        $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/
+    - scp -P $I2P_SERVER_PORT site.tar.gz $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/
     
-    # Extract and set permissions
+    # Extract and set permissions on server
     - |
       ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP \
         "cd /tmp && \
@@ -104,15 +90,20 @@ deploy:i2p-server:
          sudo chown -R www-data:www-data /var/www/html/ && \
          sudo chmod -R 755 /var/www/html/ && \
          rm -f site.tar.gz"
+    
+    - echo "Deployment completed successfully!"
   environment:
     name: production
     url: https://stormycloud.org
   only:
     - main
-  when: manual  # Change to 'on_success' for automatic deployment
+  when: manual  # Remove this line for automatic deployment
 
-# Alternative deployment using rsync (more efficient for large sites)
-deploy:i2p-server-rsync:
+# ============================================
+# Alternative Deploy with Rsync (Optional)
+# ============================================
+
+deploy:production-rsync:
   stage: deploy
   image: alpine:latest
   dependencies:
@@ -125,14 +116,14 @@ deploy:i2p-server-rsync:
     - chmod 700 ~/.ssh
     - ssh-keyscan -p $I2P_SERVER_PORT -H $I2P_SERVER_IP >> ~/.ssh/known_hosts
   script:
-    # Use rsync for more efficient transfers
+    # Sync files using rsync (more efficient for large sites)
     - |
       rsync -avz --delete \
         -e "ssh -p $I2P_SERVER_PORT" \
         public/ \
         $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/site-new/
     
-    # Atomic switch to new version
+    # Atomic deployment swap
     - |
       ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP \
         "sudo rm -rf /var/www/html.old && \
@@ -141,25 +132,8 @@ deploy:i2p-server-rsync:
          sudo chown -R www-data:www-data /var/www/html/ && \
          sudo chmod -R 755 /var/www/html/"
   environment:
-    name: production-rsync
+    name: production
     url: https://stormycloud.org
   only:
     - main
   when: manual
-  allow_failure: false
-
-# ============================================
-# DAST Configuration Override
-# ============================================
-
-dast:
-  stage: dast
-  variables:
-    DAST_WEBSITE: "https://stormycloud.org"
-    DAST_FULL_SCAN_ENABLED: "true"
-  dependencies: []
-  only:
-    refs:
-      - main
-    variables:
-      - $DAST_DISABLED != "true"

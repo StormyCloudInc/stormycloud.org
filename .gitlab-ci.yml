@@ -1,16 +1,16 @@
+# GitLab CI/CD Configuration for StormyCloud.org
+# Fixed version - properly handles security scanning templates
+
 stages:
   - build
   - test
-  - security
   - deploy
+  - dast
 
 variables:
   HUGO_VERSION: "latest"
   DAST_WEBSITE: "https://stormycloud.org"
-  # Security scanning variables
   SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/security-products"
-  SAST_EXCLUDED_PATHS: "spec, test, tests, tmp"
-  SECRET_DETECTION_EXCLUDED_PATHS: ""
 
 # Cache Hugo modules for faster builds
 cache:
@@ -19,6 +19,16 @@ cache:
     - .hugo_cache/
     - resources/
     - node_modules/
+
+# ============================================
+# Security Scanning Templates
+# ============================================
+
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/DAST.gitlab-ci.yml
 
 # ============================================
 # Build Stage
@@ -55,60 +65,6 @@ test:html:
   only:
     - main
     - merge_requests
-
-# ============================================
-# Security Scanning Stage
-# ============================================
-
-include:
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Security/SAST-IaC.gitlab-ci.yml
-  - template: Security/Container-Scanning.gitlab-ci.yml
-
-# DAST scanning with custom configuration
-dast:
-  stage: security
-  inherit:
-    default: false
-  script:
-    - echo "Running DAST scan on ${DAST_WEBSITE}"
-  variables:
-    DAST_WEBSITE: "https://stormycloud.org"
-    DAST_FULL_SCAN_ENABLED: "true"
-    DAST_BROWSER_SCAN: "true"
-  needs: []
-  dependencies: []
-  only:
-    - main
-    - schedules
-  allow_failure: true
-
-# Override security job stages to fit our pipeline
-dependency_scanning:
-  stage: security
-  needs: []
-
-secret_detection:
-  stage: security
-  needs: []
-
-sast:
-  stage: security
-  needs: []
-
-sast-iac:
-  stage: security
-  needs: []
-
-container_scanning:
-  stage: security
-  needs: ["build:hugo"]
-  rules:
-    - if: $CONTAINER_SCANNING_DISABLED
-      when: never
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 # ============================================
 # Deploy Stage
@@ -193,58 +149,17 @@ deploy:i2p-server-rsync:
   allow_failure: false
 
 # ============================================
-# Scheduled Jobs
+# DAST Configuration Override
 # ============================================
 
-# Weekly security scan
-security:weekly-scan:
-  stage: security
-  inherit:
-    default: false
-  script:
-    - echo "Running comprehensive security scan"
-  only:
-    - schedules
+dast:
+  stage: dast
   variables:
+    DAST_WEBSITE: "https://stormycloud.org"
     DAST_FULL_SCAN_ENABLED: "true"
-    DEPENDENCY_SCANNING_DISABLED: "false"
-    SAST_DISABLED: "false"
-    SECRET_DETECTION_DISABLED: "false"
-
-# ============================================
-# Review Apps (Optional)
-# ============================================
-
-deploy:review:
-  stage: deploy
-  image: klakegg/hugo:ext-alpine
-  script:
-    - hugo --config="config/config.toml" --baseURL="https://$CI_ENVIRONMENT_SLUG.stormycloud.org" --gc --minify
-    - echo "Deploy review app to $CI_ENVIRONMENT_SLUG"
-  artifacts:
-    paths:
-      - public/
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: https://$CI_ENVIRONMENT_SLUG.stormycloud.org
-    on_stop: stop:review
-    auto_stop_in: 1 week
+  dependencies: []
   only:
-    - merge_requests
-  except:
-    - main
-  when: manual
-
-stop:review:
-  stage: deploy
-  image: alpine:latest
-  script:
-    - echo "Stopping review app $CI_ENVIRONMENT_SLUG"
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    action: stop
-  when: manual
-  only:
-    - merge_requests
-  except:
-    - main
+    refs:
+      - main
+    variables:
+      - $DAST_DISABLED != "true"

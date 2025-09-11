@@ -1,0 +1,41 @@
+# GitLab CI/CD - Security Scanning Pipeline
+# This file handles all security scanning operations
+
+stages:
+  - test
+  - dast
+
+variables:
+  DAST_WEBSITE: "https://stormycloud.org"
+  SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/security-products"
+  SAST_EXCLUDED_PATHS: "spec, test, tests, tmp"
+
+# ============================================
+# Include GitLab Security Templates
+# ============================================
+
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/DAST.gitlab-ci.yml
+
+# ============================================
+# DAST Override Configuration
+# ============================================
+
+dast:
+  stage: dast
+  variables:
+    DAST_WEBSITE: "https://stormycloud.org"
+    DAST_FULL_SCAN_ENABLED: "true"
+    DAST_BROWSER_SCAN: "true"
+  script:
+    - echo "Running DAST scan on ${DAST_WEBSITE}"
+  rules:
+    - if: $DAST_DISABLED
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always

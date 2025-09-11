@@ -1,0 +1,72 @@
+{{ define "main" }}
+<style>
+.archive-listing {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #181f33;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px #0003;
+  padding: 2rem 1.5rem;
+  color: #f5f7fa;
+}
+.archive-listing h1 {
+  color: #3cb7ff;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.archive-group {
+  margin-bottom: 2rem;
+}
+.archive-group h2 {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 0.7rem;
+  border-bottom: 1px solid #3cb7ff;
+  padding-bottom: 0.3rem;
+}
+.archive-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.archive-list li {
+  margin-bottom: 0.7rem;
+  font-size: 1.08rem;
+}
+.archive-list a {
+  color: #3cb7ff;
+  text-decoration: none;
+  font-weight: 700;
+}
+.archive-list a:hover {
+  text-decoration: underline;
+}
+</style>
+<section class="archive-listing">
+  <h1>Blog Archives</h1>
+  {{ $pages := .Site.RegularPages }}
+  {{ $years := slice }}
+  {{ range $pages }}
+    {{ $year := .Date.Format "2006" }}
+    {{ if not (in $years $year) }}
+      {{ $years = $years | append $year }}
+    {{ end }}
+  {{ end }}
+  {{ range $year := $years }}
+    <div class="archive-group">
+      <h2>{{ $year }}</h2>
+      <ul class="archive-list">
+        {{ range $pages }}
+          {{ if eq (.Date.Format "2006") $year }}
+            <li>
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              <span style="color:#b0c4de; font-size:0.98em;">({{ .Date.Format "Jan 2" }})</span>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+  {{ end }}
+</section>
+{{ end }}

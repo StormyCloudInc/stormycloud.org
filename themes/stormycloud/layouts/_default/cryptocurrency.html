@@ -1,0 +1,28 @@
+{{ define "main" }}
+  <div class="page-title" style="background-image: url('../images/crypto_title.webp');">
+    <h1>{{ .Params.page_content.h1_Heading }}</h1>
+  </div>
+<div class="crypto-page">
+  {{ with .Params.page_content.sections }}
+    {{ range . }}
+      <h2>{{ .title }}</h2>
+      <p class="crypto-description">{{ .text | markdownify }}</p>
+    {{ end }}
+  {{ end }}
+  <div class="crypto-nodes">
+    {{ with .Params.page_content.sub_section }}
+        {{ range . }}
+          <div class="crypto-node">
+            <h2 class="line-short">
+              <img src=" {{ .image}}" width="25" alt="doge logo"> {{ .title}}
+            </h2>
+            <div><b>State:</b> <span class="status-active">{{ .state}}</span></div>
+            {{ range .details }}
+              <div>{{.}}</div>
+            {{ end }}
+          </div>
+        {{ end }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}

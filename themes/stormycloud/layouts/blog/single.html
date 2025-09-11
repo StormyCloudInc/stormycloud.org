@@ -1,0 +1,171 @@
+{{ define "main" }}
+<style>
+  .img-left  { float: left; margin-right: 15px; }
+.img-right { float: right; margin-left: 15px; }
+.img-center { display: block; margin: 0 auto; text-align: center; }
+h2::after {
+    /* background: linear-gradient(90deg, #fff, #fff); */
+}
+h2{
+  
+}
+.single-blog-post {
+  /* background: #181f338f; */
+  /* border-radius: 18px;
+  box-shadow: 0 6px 32px #0004;
+  padding: 0.5rem 0rem 2rem 0rem;
+  margin: 1.5rem auto 1rem auto;
+  color: #f5f7fa;
+  position: relative; */
+}
+.blog-header {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+.blog-header h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 2px 12px #0005;
+}
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 1.5rem;
+  font-size: 1.08rem;
+  color: #b0c4de;
+  justify-content: center;
+}
+.post-meta svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 7px;
+  fill: #3cb7ff;
+}
+.post-meta .author, .post-meta .date {
+  display: flex;
+  align-items: center;
+}
+.post-meta a, .post-meta time {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.blog-body {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #e0e6f0;
+  margin-top: 1.5rem;
+}
+.blog-body img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 12px #0002;
+}
+@media (max-width: 900px) {
+  .inner {
+        width: 100%;
+        padding: 15px 5px 40px;
+    }
+  .single-blog-post {
+    padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+  }
+  .blog-header h1 {
+    font-size: 2rem;
+  }
+  .post-meta {
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+      .blog-card {
+        width: 100%;
+      }
+      .img-left img, .img-right img, .img-center img { width: 100%; }
+    .img-left, .img-right, .img-center { float: none; margin: 0; }
+}
+</style>
+<article class="single-blog-post">
+  <div class="blog-header">
+    <h1>{{ .Title }}</h1>
+  </div>
+  <div class="post-meta">
+    <div class="author">
+      <!-- Author Icon -->
+      <svg viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M248 104c-53 0-96 43-96 96s43 96 96 96 96-43 96-96-43-96-96-96zm0 144c-26.5 0-48-21.5-48-48s21.5-48 48-48 
+        48 21.5 48 48-21.5 48-48 48zm0-240C111 8 0 119 0 256s111 248 248 248 
+        248-111 248-248S385 8 248 8zm0 448c-49.7 0-95.1-18.3-130.1-48.4 
+        14.9-23 40.4-38.6 69.6-39.5 20.8 6.4 40.6 9.6 60.5 9.6s39.7-3.1 
+        60.5-9.6c29.2 1 54.7 16.5 69.6 39.5-35 30.1-80.4 48.4-130.1 48.4zm162.7-84.1c-24.4-31.4-62.1-51.9-105.1-51.9-10.2 0-26 
+        9.6-57.6 9.6-31.5 0-47.4-9.6-57.6-9.6-42.9 0-80.6 20.5-105.1 
+        51.9C61.9 339.2 48 299.2 48 256c0-110.3 89.7-200 
+        200-200s200 89.7 200 200c0 43.2-13.9 83.2-37.3 115.9z"/>
+      </svg>
+      <a href="/authors/{{ (index .Params.author 0) | urlize }}/">
+        {{ (index .Params.author 0) | humanize }}
+      </a>
+    </div>
+
+    <div class="date">
+      <!-- Calendar Icon -->
+      <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 
+        48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 
+        12-12zm436-44v-36c0-26.5-21.5-48-48-48h-48V12c0-6.6 
+        -5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6 
+        -5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 
+        64 0 85.5 0 112v36c0 6.6 5.4 12 12 12h424c6.6 0 
+        12-5.4 12-12z"/>
+      </svg>
+      <time datetime="{{ .Date }}">{{ .Date.Format "January 2, 2006" }}</time>
+    </div>
+  </div>
+
+  <!-- Post Content -->
+  <div class="blog-body">
+    {{ .Content }}
+  </div>
+  <script>
+  // Get raw dir from Hugo
+  let slugDir = "{{ .File.Dir }}"; // e.g., "blog/privacy-dns-the-key-to-anonymous-browsing/"
+
+  // Extract slug only: remove "blog/" and trailing slash
+  let slugfh = slugDir.replace(/^blog\//, "").replace(/\/$/, "");
+
+  console.log("slugfh >>", slugfh); // Expected: privacy-dns-the-key-to-anonymous-browsing
+
+  const dataUrl = "/data/post-views.json";
+
+  function updateViewCountAjax() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', dataUrl + '?t=' + Date.now(), true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          try {
+            var views = JSON.parse(xhr.responseText);
+            console.log("views >>", views);
+            console.log("views vvv >>", views[slugfh]);
+            document.getElementById('post-views').textContent = views[slugfh] || 0;
+          } catch (e) {
+            console.error('Error parsing views JSON:', e);
+            document.getElementById('post-views').textContent = 'N/A';
+          }
+        } else {
+          console.error('AJAX error:', xhr.status, xhr.statusText);
+          document.getElementById('post-views').textContent = 'N/A';
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  updateViewCountAjax();
+</script>
+
+
+</article>
+{{ end }}

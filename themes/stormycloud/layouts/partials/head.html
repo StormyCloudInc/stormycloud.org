@@ -1,0 +1,30 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>{{ .Site.Title}} - {{ .Title }}</title>
+<link rel="stylesheet" href="{{ "stormy.css" | relURL }}" type="text/css">
+<link rel="icon" href="{{ "images/favicon.png" | relURL }}" type="image/png">
+<link rel="canonical" href="{{ .Permalink }}" />
+{{- $image := "" -}}
+{{- if .Params.featured_image -}}
+  {{- with .Resources.GetMatch .Params.featured_image -}}
+    {{- $image = .Permalink -}}
+  {{- else -}}
+    {{- $image = printf "%s%s" site.BaseURL (.Params.featured_image | relURL) -}}
+  {{- end -}}
+{{- else if .Params.image -}}
+  {{- $image = printf "%s%s" site.BaseURL (.Params.image | relURL) -}}
+{{- end }}
+<meta name="description" content="{{ .Description }}" />
+<meta name="keywords" content="{{ .Params.keywords }}">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ .Title }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+{{- if $image }}
+<meta property="og:image" content="{{ $image }}" />
+{{- end }}
+<meta property="twitter:title" content="{{ .Title }}" />
+<meta property="twitter:description" content="{{ .Description }}" />
+{{- if $image }}
+<meta property="twitter:image" content="{{ $image }}" />
+{{- end }}
+<meta property="twitter:card" content="summary_large_image" />

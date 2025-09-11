@@ -1,0 +1,159 @@
+baseURL = "https://www.stormycloud.org" 
+languageCode = "en-us"
+title = "StormyCloud Inc"
+theme =  "stormycloud"
+contentDir = "content"
+disableKinds = ["taxonomy", "term", "RSS"]
+ignoreErrors= ["error-remote-getjson"]
+enableRobotsTXT = true
+ignoreFiles = ["(?i:readme.md)"]
+google_analytics = "G-TJZ3JE1PYD"
+
+[taxonomies]
+  author = "authors"
+  archive = "archives"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+      
+[menu]
+  [[menu.main]]
+    name = "About Us"
+    url = "#"
+    weight = 1
+    [[menu.main]]
+      parent = "About Us"
+      name = "Our Mission"
+      url = "/mission"
+      weight = 1
+    [[menu.main]]
+      parent = "About Us"
+      name = "Board Members"
+      url = "/board-information"
+      weight = 2
+    [[menu.main]]
+      parent = "About Us"
+      name = "Warrant Canary"
+      url = "/warrant-canary"
+      weight = 3
+    [[menu.main]]
+      parent = "About Us"
+      name = "Company Information"
+      url = "/companyinfo"
+      weight = 4
+  [[menu.main]]
+    name = "I2P"
+    url = "#"
+    weight = 2
+    [[menu.main]]
+      parent = "I2P"
+      name = "What is I2P?"
+      url = "/i2p"
+      weight = 1
+    [[menu.main]]
+      parent = "I2P"
+      name = "I2P Outproxy"
+      url = "/i2p-outproxy"
+      weight = 2
+    [[menu.main]]
+      parent = "I2P"
+      name = "I2P Services"
+      url = "/i2p-services"
+      weight = 3
+    [[menu.main]]
+      parent = "I2P"
+      name = "Reseed Server"
+      url = "/reseed"
+      weight = 4
+    [[menu.main]]
+      parent = "I2P"
+      name = "CheckI2P.com"
+      url = "https://checki2p.com/"
+      weight = 5
+      pre = "_blank"
+  [[menu.main]]
+    name = "Services"
+    url = "#"
+    weight = 3
+    [[menu.main]]
+      parent = "Services"
+      name = "Public DNS"
+      url = "/dns"
+      weight = 1
+    [[menu.main]]
+      parent = "Services"
+      name = "Cryptocurrency Nodes"
+      url = "/cryptocurrency"
+      weight = 2
+    [[menu.main]]
+      parent = "Services"
+      name = "ASDB Tracking"
+      url = "/adsb"
+      weight = 3
+  [[menu.main]]
+    name = "Guides"
+    url = "#"
+    weight = 4
+    [[menu.main]]
+      parent = "Guides"
+      name = "Installing I2P+ on Linux"
+      url = "/install-i2p"
+      weight = 1
+    [[menu.main]]
+      parent = "Guides"
+      name = "Installing I2P+ on Windows"
+      url = "/install-i2p-windows"
+      weight = 2
+    [[menu.main]]
+      parent = "Guides"
+      name = "Accessing I2P & Application's"
+      url = "/accessing-i2p"
+      weight = 3
+    [[menu.main]]
+      parent = "Guides"
+      name = "How to create SSH Tunnel"
+      url = "/create-ssh-tunnel"
+      weight = 4
+    [[menu.main]]
+      parent = "Guides"
+      name = "Creating I2P Reseed Server"
+      url = "/creating-and-running-reseed-server"
+      weight = 5
+    [[menu.main]]
+      parent = "Guides"
+      name = "Updating I2P Outproxy"
+      url = "/updating-i2p-outproxy"
+      weight = 6
+  [[menu.main]]
+    name = "Graphs"
+    url = "#"
+    weight = 5
+    [[menu.main]]
+      parent = "Graphs"
+      name = "I2P Stats"
+      url = "/i2p-stats"
+      weight = 1
+    [[menu.main]]
+      parent = "Graphs"
+      name = "I2P Outproxy Stats"
+      url = "/outproxy-stats/"
+      weight = 2
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 6
+  [[menu.main]]
+    name = "Donate"
+    url = "/donate"
+    weight = 7
+  [[menu.main]]
+    name = "Contact Us"
+    url = "/contact"
+    weight = 8
+
+[sitemap]
+    filename = "sitemap.xml"
+    priority = 0.5
+    

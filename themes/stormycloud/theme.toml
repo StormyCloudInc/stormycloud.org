@@ -1,0 +1,7 @@
+name = "stormycloud"
+author = "Amjad Ali"
+description = "A custom Hugo theme based on the StormyCloud Inc website."
+license = "MIT"
+homepage = "https://www.stormycloud.org"
+tags = ["hugo", "theme", "stormycloud"]
+min_version = "0.54.0"

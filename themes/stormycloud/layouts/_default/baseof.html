@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+   {{ partial "head.html" . }}
+   <style>
+    body#blog .inner, body#blog .authors{
+      width: 100%;
+      background: transparent;
+      box-shadow: 0 0 0 2px #393939, 0 0 0 4px #20316a, 0 0 0 5px #00000000, inset 0 0 0 1px rgb(255 255 255 / 0%);
+    }
+     body#blog-detail .inner{
+      background: linear-gradient(to bottom, rgba(43, 63, 136, .75), rgba(37, 54, 116, .75));
+      box-shadow: 0 0 0 2px #393939, 0 0 0 4px #20316a, 0 0 0 5px #00000000, inset 0 0 0 1px rgb(255 255 255 / 0%);
+    }
+   </style>
+</head>
+<body
+  {{ if .Params.bodyId }}id="{{ .Params.bodyId }}"
+  {{ else if eq .RelPermalink "/blog/" }}id="blog"
+  {{ else if strings.HasPrefix .RelPermalink "/blog/" }}id="blog-detail"
+  {{ end }}
+  {{ if strings.Contains .RelPermalink "/authors/" }}id="blog"{{ end }}
+>
+  {{ partial "header.html" . }}
+  <div class="container">
+    <div class="inner">
+      {{ block "main" . }}{{ end }}
+    </div>
+  </div>
+  {{ partial "footer.html" . }}
+  {{ with .Site.Params.google_analytics }}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ . }}');
+    </script>
+  {{ end }}
+</body>
+</html>

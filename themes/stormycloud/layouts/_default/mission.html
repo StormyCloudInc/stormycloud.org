@@ -1,0 +1,18 @@
+{{ define "main" }}
+  <div class="page-title" style="background-image: url('../images/mission-title.webp');">
+    <h1>{{ .Params.page_content.h1_Heading }}</h1>
+  </div>
+
+  {{ with .Params.page_content.sections }}
+    {{ range . }}
+      <h2>{{ .title }}</h2>
+      <p class="mission">{{ .text | markdownify }}</p>
+    {{ end }}
+  {{ end }}
+
+  {{ with .Params.page_content.link }}
+    <a title="{{ $.Params.page_content.link_text }}" href="{{ . }}" class="more-details-btn">
+      {{ $.Params.page_content.link_text }}
+    </a>
+  {{ end }}
+{{ end }}

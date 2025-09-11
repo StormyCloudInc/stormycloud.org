@@ -13,9 +13,8 @@ stages:
 # ============================================
 variables:
   SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/security-products"
-  DS_EXCLUDED_ANALYZERS: ""
-  SAST_EXCLUDED_ANALYZERS: ""
-  SECRET_DETECTION_EXCLUDED_ANALYZERS: ""
+  DS_DEFAULT_ANALYZERS: "gemnasium,gemnasium-python,gemnasium-maven,retire.js,bundler-audit"
+  SAST_DEFAULT_ANALYZERS: "semgrep"
 
 # ============================================
 # Build Job
@@ -31,7 +30,7 @@ build:
   artifacts:
     paths:
       - site.tar.gz
-      - public/  # Keep public directory for security scanning
+      - public/
     expire_in: 1 day
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
@@ -42,7 +41,7 @@ build:
       when: on_success
 
 # ============================================
-# Test Stage (optional - add your tests here)
+# Test Stage
 # ============================================
 test:unit:
   stage: test
@@ -59,23 +58,21 @@ test:unit:
   allow_failure: true
 
 # ============================================
-# Security Scanning Templates
-# ============================================
-include:
-  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
-  - template: Jobs/Secret-Detection.gitlab-ci.yml
-  - template: Jobs/SAST.gitlab-ci.yml
-
-# ============================================
-# Security Scanning Job Configurations
+# Security Scanning Jobs (Direct Implementation)
 # ============================================
 
-# Dependency Scanning - runs on schedule and optionally on main
-dependency_scanning:
+# Dependency Scanning using Gemnasium
+gemnasium-dependency_scanning:
   stage: security-scan
-  extends: .ds-analyzer
-  variables:
-    DS_EXCLUDED_PATHS: "spec,test,tests,tmp,vendor"
+  image: "$SECURE_ANALYZERS_PREFIX/gemnasium:latest"
+  script:
+    - /analyzer run
+  artifacts:
+    reports:
+      dependency_scanning: gl-dependency-scanning-report.json
+    paths:
+      - gl-dependency-scanning-report.json
+    expire_in: 1 week
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: on_success
@@ -85,17 +82,19 @@ dependency_scanning:
       when: on_success
     - when: never
   allow_failure: true
-  artifacts:
-    reports:
-      dependency_scanning: gl-dependency-scanning-report.json
-    paths:
-      - gl-dependency-scanning-report.json
-    expire_in: 1 week
 
-# Secret Detection - runs on schedule and on main/MR
+# Secret Detection
 secret_detection:
   stage: security-scan
-  extends: .secret-analyzer
+  image: "$SECURE_ANALYZERS_PREFIX/secrets:latest"
+  script:
+    - /analyzer run
+  artifacts:
+    reports:
+      secret_detection: gl-secret-detection-report.json
+    paths:
+      - gl-secret-detection-report.json
+    expire_in: 1 week
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: on_success
@@ -105,20 +104,21 @@ secret_detection:
       when: on_success
     - when: never
   allow_failure: true
-  artifacts:
-    reports:
-      secret_detection: gl-secret-detection-report.json
-    paths:
-      - gl-secret-detection-report.json
-    expire_in: 1 week
 
-# SAST - runs on schedule and optionally on main
+# SAST using Semgrep
 semgrep-sast:
   stage: security-scan
-  extends: .sast-analyzer
   image: "$SECURE_ANALYZERS_PREFIX/semgrep:latest"
+  script:
+    - /analyzer run
   variables:
     SAST_EXCLUDED_PATHS: "spec,test,tests,tmp,vendor"
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+    paths:
+      - gl-sast-report.json
+    expire_in: 1 week
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       when: on_success
@@ -166,12 +166,6 @@ deploy:production:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: on_success
     - when: never
-  only:
-    variables:
-      - $I2P_SERVER_SSH_KEY
-      - $I2P_SERVER_PORT
-      - $I2P_SERVER_IP
-      - $I2P_SERVER_USER
 
 # ============================================
 # DAST (Dynamic Application Security Testing)
@@ -181,12 +175,10 @@ dast:scheduled:
   image: owasp/zap2docker-stable:latest
   variables:
     DAST_WEBSITE: "https://stormycloud.org"
-    ZAP_FULL_SCAN: "true"
   script:
     - |
       echo "Starting DAST scan on ${DAST_WEBSITE}"
       mkdir -p /zap/reports
-      # Run ZAP baseline scan (you can change to full scan if needed)
       zap-baseline.py -t "${DAST_WEBSITE}" -r dast-report.html -J dast-report.json || true
       echo "DAST scan completed"
   artifacts:
@@ -205,7 +197,7 @@ dast:scheduled:
   allow_failure: true
 
 # ============================================
-# Optional: Deployment Smoke Test
+# Deployment Smoke Test
 # ============================================
 smoke-test:
   stage: dast

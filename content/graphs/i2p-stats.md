@@ -22,11 +22,11 @@ page_content:
       image: "/images/futurestats.png"
       alt: "Future Stats Here"
     - type: iframe
-      src: "https://grafana.stormycloud.org/d-solo/aduy3m9bglm9sa/24hr-dashboard?orgId=1&panelId=3"
+      src: "https://dashboard.stormycloud.org/d-solo/3ce77267-cb91-46d8-986c-70b0b1632d57/24hr-dashboard?orgId=1&timezone=browser&panelId=3&__feature.dashboardSceneSolo=true"
       image: ""
-      alt: ""
+      alt: "I2P Traffic Rate"
     - type: iframe
-      src: "https://grafana.stormycloud.org/d-solo/aduy3m9bglm9sa/24hr-dashboard?orgId=1&panelId=4"
+      src: "https://dashboard.stormycloud.org/d-solo/3ce77267-cb91-46d8-986c-70b0b1632d57/24hr-dashboard?orgId=1&timezone=browser&panelId=4&__feature.dashboardSceneSolo=true"
       image: ""
-      alt: ""
+      alt: "I2P Bandwidth"
 ---

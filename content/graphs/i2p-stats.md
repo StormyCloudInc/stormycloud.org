@@ -10,7 +10,7 @@ page_content:
   h2_Heading: "StormyCloud I2P Service Stats"
   stats:
     - type: iframe
-      src: https://grafana.stormycloud.org/d-solo/dduy4v61g81z4e/this-month?orgId=1&panelId=2
+      src: "https://dashboard.stormycloud.org/d-solo/dbcfde82-4b11-45b8-b628-5c119c5308bc/1month-dashboard?orgId=1&timezone=browser&panelId=1&__feature.dashboardSceneSolo=true"
       image: ""
       alt: ""
     - type: image

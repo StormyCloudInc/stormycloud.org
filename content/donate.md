@@ -51,9 +51,4 @@ page_content:
       image: "images/uptimerobot-logo.svg"
       description: "Free website monitoring service that keeps your sites running smoothly."
       link: "https://uptimerobot.com/"
-
-    - name: "Termius"
-      image: "images/termius-logo.svg"
-      description: "Cross-platform SSH client with secure terminal access and team collaboration."
-      link: "https://termius.com/"
 ---

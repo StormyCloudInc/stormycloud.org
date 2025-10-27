@@ -41,9 +41,15 @@ We're incredibly grateful to have both Lance and idk guiding StormyCloud as we t
 
 Starting immediately, **I2P will begin accepting donations** through cryptocurrency, credit/debit cards, and bank transfers. These funds will directly support:
 
-- I2P software development
-- Infrastructure and hosting
-- Research, documentation, and outreach
+<div style="margin: 20px 0;">
+
+**I2P software development** — Building and improving the core I2P network and applications
+
+**Infrastructure and hosting** — Maintaining reliable servers and network infrastructure
+
+**Research, documentation, and outreach** — Expanding I2P's reach and capabilities
+
+</div>
 
 All donations will be processed through **StormyCloud**, a registered 501(c)(3) nonprofit, making them **tax-deductible for U.S. donors**.
 

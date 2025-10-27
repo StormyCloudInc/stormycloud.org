@@ -28,13 +28,13 @@ page_content:
       designation: "Director of AI and Automation"
       image: "/images/kevin.webp"
       details: "StormyCloud's Director of AI and Automation, is a pioneer in using artificial intelligence to improve digital privacy. Kevin's expertise ensures StormyCloud remains at the forefront of privacy protection technologies in the digital age"
-    - name: "Lance James"
-      designation: "Board Member"
-      image: "/images/lance.webp"
-      details: "Lance James is the original founder of the Invisible IRC Project (IIP), which evolved into the Invisible Internet Project (I2P). A recognized innovator in cybersecurity and privacy technologies, Lance has spent over two decades advancing secure communication systems and digital defense. His deep technical expertise and leadership continue to strengthen I2P's mission to build a safer, more private internet."
     - name: "Eyedeekay \"aka idk\""
       designation: "Board Member"
       image: "/images/idk.webp"
       details: "eyedeekay (idk) is one of the lead developers and maintainers within the Invisible Internet Project (I2P). Since 2019, he has played a key role in the development and maintenance of many of I2P's core applications. His extensive experience in software development and open-source collaboration will be a valuable asset to StormyCloud's mission to advance privacy-focused technology."
+    - name: "Lance James"
+      designation: "Board Member"
+      image: "/images/lance.webp"
+      details: "Lance James is the original founder of the Invisible IRC Project (IIP), which evolved into the Invisible Internet Project (I2P). A recognized innovator in cybersecurity and privacy technologies, Lance has spent over two decades advancing secure communication systems and digital defense. His deep technical expertise and leadership continue to strengthen I2P's mission to build a safer, more private internet."
 
 ---

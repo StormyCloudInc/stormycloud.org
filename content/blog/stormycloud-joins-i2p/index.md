@@ -47,6 +47,6 @@ Our current services will continue as usual, but new non-I2P projects will be pa
 Nothing about I2P’s philosophy or independence is changing.  
 StormyCloud’s role is to **empower**, not steer — to provide resources, structure, and visibility so the I2P community can keep building the privacy-preserving internet we all believe in.
 
-With the leadership of Lance and idk, and the collective strength of both communities, we’re ready to take I2P to the next level.
+With the leadership of Lance and idk, and the collective strength of both communities, we’re ready to take I2P to the next level. 
 
 

@@ -4,14 +4,15 @@ date: 2025-01-27
 draft: false
 description: "StormyCloud officially joins the I2P family, welcoming new board members and announcing full transparency for I2P donations."
 author: ["stormycloud-team"]
-featured_image: "images/i2p-stormycloud.webp"
-
+featured_image: "images/stormycloud-i2p-partnership.webp"
+summary: "StormyCloud officially joins the I2P family, welcoming Lance James and eyedeekay to the board."
 ---
+
+{{< img-align src="images/stormycloud-i2p-partnership.webp" alt="StormyCloud and I2P Partnership" align="center" >}}
 
 # StormyCloud Joins the I2P Family
 
-After years of supporting I2P from the outside, we’re proud to announce that **StormyCloud is officially joining the I2P family.**  
-This partnership marks a new chapter for both organizations — one built on shared values of privacy, freedom, and a truly decentralized internet.
+After years of supporting I2P from the outside, we're proud to announce that **StormyCloud is officially joining the I2P family.** This partnership marks a new chapter for both organizations — one built on shared values of privacy, freedom, and a truly decentralized internet.
 
 ## New Board Members
 
@@ -24,29 +25,22 @@ We’re incredibly grateful to have both Lance and idk guiding StormyCloud as we
 
 ## What This Means for I2P
 
-Starting immediately, **I2P will begin accepting donations** through cryptocurrency, credit/debit cards, and bank transfers.  
-These funds will directly support:
+Starting immediately, **I2P will begin accepting donations** through cryptocurrency, credit/debit cards, and bank transfers. These funds will directly support:
 
-- I2P software development  
-- Infrastructure and hosting  
-- Research, documentation, and outreach  
+- I2P software development
+- Infrastructure and hosting
+- Research, documentation, and outreach
 
 All donations will be processed through **StormyCloud**, a registered 501(c)(3) nonprofit, making them **tax-deductible for U.S. donors**.
 
-To be absolutely clear:  
-**100% of all funds and donations received for I2P will go directly toward I2P development, operations, and community support.**  
-StormyCloud does not take any portion of these funds for unrelated expenses.
+To be absolutely clear: **100% of all funds and donations received for I2P will go directly toward I2P development, operations, and community support.** StormyCloud does not take any portion of these funds for unrelated expenses.
 
 ## What This Means for StormyCloud
 
-StormyCloud will shift focus more heavily toward supporting I2P — both technically and organizationally.  
-Our current services will continue as usual, but new non-I2P projects will be paused while we put our full energy into helping I2P reach every user, every network, and every device possible.
+StormyCloud will shift focus more heavily toward supporting I2P — both technically and organizationally. Our current services will continue as usual, but new non-I2P projects will be paused while we put our full energy into helping I2P reach every user, every network, and every device possible.
 
 ## The Mission Continues
 
-Nothing about I2P’s philosophy or independence is changing.  
-StormyCloud’s role is to **empower**, not steer — to provide resources, structure, and visibility so the I2P community can keep building the privacy-preserving internet we all believe in.
+Nothing about I2P's philosophy or independence is changing. StormyCloud's role is to **empower**, not steer — to provide resources, structure, and visibility so the I2P community can keep building the privacy-preserving internet we all believe in.
 
-With the leadership of Lance and idk, and the collective strength of both communities, we’re ready to take I2P to the next level. 
-
-
+With the leadership of Lance and idk, and the collective strength of both communities, we're ready to take I2P to the next level.

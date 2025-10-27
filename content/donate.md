@@ -34,7 +34,7 @@ page_content:
   donation_widgets:
     credit_card:
       title: "Credit Card"
-      givebutter_id: "gko5og"
+      html: '<a href="#XJSGTLGH" style="display: none"></a>'
     btc_pay:
       title: "Cryptocurrency"
       storeId: "v4hjqz3BvaiLKpcDmzBqQoANcKn96LVBs6xsaVZ6o1U"

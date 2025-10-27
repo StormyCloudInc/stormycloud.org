@@ -1,5 +1,4 @@
 {{ define "main" }}
-<script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=KYuW620gdbglriQv&p=other"></script>
 <style>
     .custom-heading {
         font-size: 1.5em;
@@ -243,8 +242,7 @@
         <h3>{{ .Params.page_content.donation_widgets.credit_card.title }}</h3>
         <div class="donate-right-area">
             <div id="parent">
-                <givebutter-widget
-                    id="{{ .Params.page_content.donation_widgets.credit_card.givebutter_id }}"></givebutter-widget>
+                {{ .Params.page_content.donation_widgets.credit_card.html | safeHTML }}
             </div>
         </div>
     </div>

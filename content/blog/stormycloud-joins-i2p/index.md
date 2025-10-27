@@ -16,12 +16,26 @@ After years of supporting I2P from the outside, we're proud to announce that **S
 
 ## New Board Members
 
-With this change, we’re thrilled to welcome two new members to StormyCloud’s Board of Directors:
+With this change, we're thrilled to welcome two new members to StormyCloud's Board of Directors:
 
-- **Lance James** — the original creator and founder of I2P (formerly known as IIP). Lance brings a deep background in networking, cybersecurity, and program development, along with a lifelong commitment to open privacy technology.  
-- **eyedeekay (“idk”)** — a long-time I2P developer and community cornerstone. If you’ve been around I2P, you’ve seen his work. His ongoing contributions are vital to I2P’s stability, growth, and innovation.
+<div style="display: flex; flex-direction: column; gap: 30px; margin: 30px 0;">
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <img src="/images/lance.webp" alt="Lance James" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <div>
+      <h3 style="margin-top: 0;">Lance James</h3>
+      <p>The original creator and founder of I2P (formerly known as IIP). Lance brings a deep background in networking, cybersecurity, and program development, along with a lifelong commitment to open privacy technology.</p>
+    </div>
+  </div>
+  <div style="display: flex; align-items: flex-start; gap: 20px;">
+    <img src="/images/idk.webp" alt="eyedeekay (idk)" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <div>
+      <h3 style="margin-top: 0;">eyedeekay ("idk")</h3>
+      <p>A long-time I2P developer and community cornerstone. If you've been around I2P, you've seen his work. His ongoing contributions are vital to I2P's stability, growth, and innovation.</p>
+    </div>
+  </div>
+</div>
 
-We’re incredibly grateful to have both Lance and idk guiding StormyCloud as we take this next step together.
+We're incredibly grateful to have both Lance and idk guiding StormyCloud as we take this next step together.
 
 ## What This Means for I2P
 

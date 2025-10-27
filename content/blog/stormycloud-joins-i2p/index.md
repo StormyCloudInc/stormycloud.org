@@ -1,6 +1,6 @@
 ---
 title: "StormyCloud Joins the I2P Family"
-date: 2025-11-01
+date: 2025-01-27
 draft: false
 description: "StormyCloud officially joins the I2P family, welcoming new board members and announcing full transparency for I2P donations."
 author: ["stormycloud-team"]

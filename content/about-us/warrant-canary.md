@@ -8,6 +8,17 @@ bodyId: canary
 page_content:
   h1_Heading: "Warrant Canary"
   sections:
+    - title: "Our Philosophy"
+      text: |
+        **StormyCloud operates on a simple philosophy: we do not retain logs.**
+
+        - All servers automatically purge logs every 15 minutes
+        - We do not keep logs of any kind
+        - We do not provide information to any law enforcement agency
+        - All public inquiries from law enforcement will be published on this page
+
+        Because we don't retain data, we cannot provide what we don't have.
+
     - title: "Warrant Canary"
       text: |
         A signed warrant canary will be published quarterly (January, April, July, and October) to ensure that StormyCloud has not been compromised by any third-party using a subpoena. You can download the [warrant](/files/message.txt.asc) and the [PGP key](/files/public.asc).
@@ -21,17 +32,10 @@ page_content:
         
         -----BEGIN PGP MESSAGE-----
 
-        owFdkU1oE1EQxzfaQhoRWpDcgmNFbSUsaUBioaUNFUVRKEQR8fT2vcnu0s2b+D6i
-        QTxahIIotFa8VkovYj160qMKXjwLgnj14KEHQcHJYkvpbZiP//zmP0+OHg6K5ZUL
-        czR6d/ZY4VVhLTrSQWtFjKG755LH6ydbjkynv5CRV3BZyyo0feytg3qtfq5UOlCF
-        RFjQ5KBrSHmJCoTuQ6rb3CVcSppjMGi7pC2CIxBgURp0YH3UJdSiypFMgGVIIxdN
-        j0W8Vmhg6jzcCFvhQggtlLlYvVGbnpCTQG1wCeZVWBTOpEzQlK7K29UeUuTTzMF4
-        JOSSIjJ2HJgq54uph0Z3UDvGYyjy5v8BzobQzLL9HQbveLTO5tOeAUEJJ0Ajc/Ks
-        pA4flhjycZJDtQ3x1GAjTKQhhlWI+vldqY6hJ7JUQYaxyAYbJVsPns2Bfb5OhqVH
-        figoF4NK+cTQpXcvry7/vj7z9cfbtd2/DR8aPCoojYzuZlamC8Gv71MjZ9Pas83X
-        /jP+ffB87NqL+YtbZzYebh0/9XNnZ74QrOLtp5/Wv8w1Niuq8i1rvDm9vfHxz81b
-        95dXr9Q/vC/+Aw==
-        =t8Qf
+        iHUEARYIAB0WIQRHv6RMhvlUPNzkuZWLRD9vEHc9FAUCaQaLGwAKCRCLRD9vEHc9
+        FOQ8AP9CPJKkbPdp/6Bl9F3B8dKcJMO+4GzKATUWdaPfFxPPDQD/dkOGgX8LSMGv
+        5JjODkJf8qjXQdRcreq5aeTV5pNffwA=
+        =9bgf
 
         -----END PGP MESSAGE-----
        

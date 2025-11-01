@@ -43,9 +43,11 @@ Starting immediately, **I2P will begin accepting donations** through cryptocurre
 
 <div style="margin: 20px 0;">
 
-- ▪ **I2P software development** — Building and improving the core I2P network and applications
-- ▪ **Infrastructure and hosting** — Maintaining reliable servers and network infrastructure
-- ▪ **Research, documentation, and outreach** — Expanding I2P's reach and capabilities
+<ul style="list-style-type: square;">
+  <li><strong>I2P software development</strong> — Building and improving the core I2P network and applications</li>
+  <li><strong>Infrastructure and hosting</strong> — Maintaining reliable servers and network infrastructure</li>
+  <li><strong>Research, documentation, and outreach</strong> — Expanding I2P's reach and capabilities</li>
+</ul>
 
 </div>
 

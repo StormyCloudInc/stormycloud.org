@@ -37,11 +37,8 @@ page_content:
       html: '<a href="#XJSGTLGH" style="display: none"></a>'
     btc_pay:
       title: "Cryptocurrency"
-      storeId: "v4hjqz3BvaiLKpcDmzBqQoANcKn96LVBs6xsaVZ6o1U"
-      min: 1
-      max: 20
-      default_price: 1
-      currency_options: ["USD", "GBP", "EUR", "BTC"]
+      disabled: true
+      message: "Temporarily out of order. Please check back soon or use alternative donation methods."
     sms:
       title: "Text to Donate"
       message: 'Text "STORMY" to 53-555 to donate via SMS. Your support helps us maintain and improve our services!'

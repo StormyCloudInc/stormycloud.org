@@ -42,10 +42,7 @@ page_content:
       text: I2PD
     - type: paragraph
       text: | 
-        To add an Outproxy for I2PD, you will need to update the i2pd.conf file. You can either use our simple one-line command to do this automatically or follow the instructions below.
-    - type: code
-      title: ""
-      content: curl -sSL https://stormycloud.org/scripts/i2pd.sh | bash
+        To add an Outproxy for I2PD, you will need to update the i2pd.conf file.
     - type: paragraph
       text: | 
         Step 1 - We need to open the i2pd configuration file, we can do this in nano or vim.

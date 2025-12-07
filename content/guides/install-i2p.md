@@ -53,13 +53,13 @@ page_content:
     - type: code
       title: ""
       content: |
-        Note: At the time of writing this, 2.6.0 was the latest release, so our URLs in the examples reflect that. To check for the latest releases, view and amend the instructions as needed below.
+        Note: At the time of writing this, I2P+ has moved to a universal installer. To check for the latest releases, view and amend the instructions as needed below.
         https://i2pplus.github.io/
         
         su i2p
         mkdir /home/i2p/i2p
         cd /home/i2p/i2p/
-        wget http://i2pplus.github.io/installers/i2pinstall_2.6.0+.exe
+        wget https://i2pplus.github.io/installers/i2pinstall.exe
 
     - type: image
       src: "/images/installi2p_3.png"
@@ -71,7 +71,7 @@ page_content:
     - type: code
       title: ""
       content: |
-        java -jar i2pinstall_2.6.0+.exe -console
+        java -jar i2pinstall.exe -console
 
 
     - type: image

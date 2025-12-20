@@ -122,23 +122,30 @@
     <div class="intro-section">
         <p>{{ .Params.page_content.intro_paragraph }}</p>
     </div>
-    
-    <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="centerreseedimage">
-    
+
+    {{- $image := resources.Get (printf "images/%s" (strings.TrimPrefix "images/" .Params.image)) -}}
+    {{- if $image -}}
+    {{- $compressed := $image.Resize "1000x webp" -}}
+    <img src="{{ $compressed.RelPermalink }}" alt="{{ .Title }}" class="centerreseedimage"
+        width="{{ $compressed.Width }}" height="{{ $compressed.Height }}" loading="lazy">
+    {{- else -}}
+    <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="centerreseedimage" loading="lazy">
+    {{- end -}}
+
     <div class="learn-more-text">
         <p>{{ .Params.page_content.learn_more_text }}</p>
     </div>
-    
+
     <div class="reseed-links">
         {{ range .Params.page_content.links }}
         <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .text }}</a>
         {{ end }}
     </div>
-    
+
     <div class="reseed-url">
         <h3>Reseed URL:</h3>
         <p>{{ .Params.page_content.reseed_url }}</p>
-        
+
 
     </div>
 </div>

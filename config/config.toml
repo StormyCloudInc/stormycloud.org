@@ -9,6 +9,29 @@ enableRobotsTXT = true
 ignoreFiles = ["(?i:readme.md)"]
 google_analytics = "G-TJZ3JE1PYD"
 
+[module]
+  [[module.mounts]]
+    source = "themes/stormycloud/assets/images"
+    target = "static/images"
+  [[module.mounts]]
+    source = "themes/stormycloud/assets/images"
+    target = "assets/images"
+  [[module.mounts]]
+    source = "themes/stormycloud/assets/fonts"
+    target = "static/fonts"
+  [[module.mounts]]
+    source = "themes/stormycloud/assets/docs"
+    target = "static/docs"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+
 [taxonomies]
   author = "authors"
   archive = "archives"

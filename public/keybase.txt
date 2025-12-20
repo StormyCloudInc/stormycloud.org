@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/stormycloud
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://www.stormycloud.org
+  * I am stormycloud (https://keybase.io/stormycloud) on keybase.
+  * I have a public key ASAQ3XQwJhabodQLuFyEz3W4VyGFt6qlhEDGw6aB9BLs9Ao
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012010dd743026169ba1d40bb85c84cf75b8572185b7aaa58440c6c3a681f412ecf40a",
+      "host": "keybase.io",
+      "kid": "012010dd743026169ba1d40bb85c84cf75b8572185b7aaa58440c6c3a681f412ecf40a",
+      "uid": "e2de9fa0bdb0ba85171e95194af44819",
+      "username": "stormycloud"
+    },
+    "merkle_root": {
+      "ctime": 1725492629,
+      "hash": "0f81d04c78d59cd898f43a035c303dba081890977a6a04b1df2a4de28ffbc0a02a901aafd8d410c912ebf8629d8ec31feedf0b0c70540bc37a0c22ba3bd2b497",
+      "hash_meta": "fea805187140e7c7776c04d715331d577f31f969dcd066da3f9c3c36ff0664c1",
+      "seqno": 26074261
+    },
+    "service": {
+      "entropy": "ezgQueFV4gUoWmmAR0n0R2yA",
+      "hostname": "www.stormycloud.org",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.4.0"
+  },
+  "ctime": 1725492637,
+  "expire_in": 504576000,
+  "prev": "aa0df8e563ce8f5bdad445ceeede875e8b52b61315cfc17b7fbc605b09f644c9",
+  "seqno": 21,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgEN10MCYWm6HUC7hchM91uFchhbeqpYRAxsOmgfQS7PQKp3BheWxvYWTESpcCFcQgqg345WPOj1va1EXO7t6HXotSthMVz8F7f7xgWwn2RMnEICXKUW0bvAXluyss24GTPqd/IpeL1oVbrJWhnr0FKEbeAgHCo3NpZ8RA1YsEDSsFvxsFiaOgA+Q8u7iC71XILseQogC6qyuuU5ziON5RufPCYXGeGyPl5h06PrardSsDyKpRDuOQeXsFDahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIGGNHt72nu3EkI7f4XUGthMQEJujwYXDaYBzo3DpGlvPo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/stormycloud
+
+==================================================================

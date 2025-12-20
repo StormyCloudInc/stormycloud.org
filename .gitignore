@@ -1,0 +1,11 @@
+# Hugo default output
+public/
+resources/
+_gen/
+
+# Temp files
+.hugo_build.lock
+.DS_Store
+
+# User-specific
+.gemini/

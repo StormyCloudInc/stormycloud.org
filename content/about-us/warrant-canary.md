@@ -26,7 +26,7 @@ page_content:
        
         Hash: SHA256
 
-        StormyCloud Inc, October 2025
+        StormyCloud Inc, January 2026
 
         StormyCloud Inc has not produced any information in response to a secret subpoena, such as one served under 18 U.S.C. Section 2709(c) of the U.S. Patriot Act, and has not built "backdoors" for any government into our products. All government requests for user data need to come through the front door (i.e., by serving valid legal process upon StormyCloud).
         

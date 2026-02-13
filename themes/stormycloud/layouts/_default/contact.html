@@ -20,11 +20,10 @@
       {{ end }}
       <a href="/{{ .pgp_key.href }}" class="more-details-btn">{{ .pgp_key.label }}</a>
 
-    {{ else if eq .type "chat" }}
+    {{ else if eq .type "call" }}
       {{ range .details }}
-        <div>{{ . }}</div>
+        <div><a href="tel:{{ . }}">{{ . }}</a></div>
       {{ end }}
-      <a href="{{ .link.href }}" class="more-details-btn">{{ .link.label }}</a>
     {{ end }}
   </div>
   {{ end }}

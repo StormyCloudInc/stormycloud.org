@@ -24,12 +24,10 @@ page_content:
     - title: DNS-over-HTTPS
       details:
        - https://dns.stormycloud.org/dns-query
-       - https://dns2.stormycloud.org/dns-query
     - title: DNS-over-QUIC
       details:
        - Coming Soon
     - title: DNS-over-TLS
       details:
        - ➤ dns.stormycloud.org:853
-       - ➤ dns2.stormycloud.org:853
 ---

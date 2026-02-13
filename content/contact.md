@@ -16,7 +16,7 @@ page_content:
       icon: "images/building.svg"
       details:
         - "StormyCloud Inc"
-        - "5900 Balcones Drive Suite 100"
+        - "5900 Balcones Drive Suite 25092"
         - "Austin, TX 78731"
 
     - type: "email"
@@ -31,14 +31,9 @@ page_content:
         label: "Download PGP Key"
         href: "files/stormycloud-admin.asc"
 
-    - type: "chat"
-      title: "Chat with us"
-      icon: "images/chat.svg"
+    - type: "call"
+      title: "Give us a call"
+      icon: "images/phone.svg"
       details:
-        - "I2P IRC Username:"
-        - "StormyCloud Channels:"
-        - "#saltr, #i2p-dev, #stormycloud"
- #     link:
- #       label: "IRC Web Client"
- #       href: "https://i2p-irc.stormycloud.org/"
+        - "802-203-0188"
 ---

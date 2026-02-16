@@ -14,8 +14,7 @@
   <link rel="canonical" href="{{ .Permalink }}" />
 
   <meta name="description" content="{{ .Description }}" />
-  <meta name="keywords" content="{{ .Params.keywords }}" />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="article" />
   <meta property="og:title" content="{{ .Title }}" />
   <meta property="og:url" content="{{ .Permalink }}" />
   {{- with .Params.image }}
@@ -64,70 +63,7 @@
 
   <!-- ── main ────────────────────────────────────────── -->
   <main class="terminal-main">
-
-    <!-- hero -->
-    <section class="hero">
-      <h1 class="hero-title">StormyCloud</h1>
-      <p class="tagline">defending internet access as a universal right since 2021<span class="cursor">_</span></p>
-    </section>
-
-    <!-- mission -->
-    <section>
-      <h2>[{{ .Params.mission.heading }}]</h2>
-      <div class="panel">
-        <p>{{ .Params.mission.text }}</p>
-        <a href="{{ .Params.mission.link }}" class="panel-link">{{ .Params.mission.link_text }}</a>
-      </div>
-    </section>
-
-    <!-- services -->
-    <section>
-      <h2>[services]</h2>
-      <div class="service-cards">
-        {{ range .Params.services }}
-        <div class="service-card">
-          <h3>{{ .name }}</h3>
-          <p>{{ .description }}</p>
-          <a href="{{ .link }}" class="card-link">&gt; learn_more</a>
-        </div>
-        {{ end }}
-      </div>
-    </section>
-
-    <!-- recent posts -->
-    <section>
-      <h2>[recent_posts]</h2>
-      <div class="log-entries">
-        {{ $posts := where .Site.RegularPages "Section" "blog" }}
-        {{ range first 3 $posts }}
-        <article class="log-entry">
-          <div class="log-meta">
-            <span>{{ .Date.Format "2006-01-02" }}</span>
-            {{ with .Params.author }}
-            <span>{{ index . 0 }}</span>
-            {{ end }}
-          </div>
-          <h3><a href="{{ .RelPermalink }}">{{ .Title | lower }}</a></h3>
-          {{ with .Params.summary }}
-          <p>{{ . | plainify | truncate 140 }}</p>
-          {{ end }}
-        </article>
-        {{ end }}
-      </div>
-      <div class="view-all">
-        <a href="/blog/">[view_all_posts]</a>
-      </div>
-    </section>
-
-    <!-- donate cta -->
-    <section>
-      <h2>[{{ .Params.donate.heading }}]</h2>
-      <div class="panel">
-        <p>{{ .Params.donate.text }}</p>
-        <a href="{{ .Params.donate.link }}" class="panel-link">{{ .Params.donate.link_text }}</a>
-      </div>
-    </section>
-
+    {{ block "main" . }}{{ end }}
   </main>
 
   <!-- ── footer ──────────────────────────────────────── -->

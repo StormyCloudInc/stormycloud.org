@@ -1,16 +1,162 @@
-{{ define "main" }}
-  <div class="welcome-section">
-    <span class="logo">
-      <img src="{{ .Params.page_content.image | relURL }}" width="160" alt="{{ .Params.page_content.image_alt }}">
-    </span>
-    <h1>{{ .Params.page_content.title }}</h1>
-    <p class="welcome-text" align="center">
-      {{ .Params.page_content.text }}
-    </p>
-    <div class="welcome-link" align="center">
-      <a href="{{ .Params.page_content.link }}" class="more-details-btn">
-        {{ .Params.page_content.link_text }}
-      </a>
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{{ .Site.Title }} - {{ .Title }}</title>
+
+  {{- $styles := resources.Get "terminal.css" | minify | fingerprint -}}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous">
+
+  <link rel="preload" href="{{ "fonts/JetBrainsMono-Regular.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+
+  <link rel="icon" href="{{ "images/favicon.png" | relURL }}" type="image/png">
+  <link rel="canonical" href="{{ .Permalink }}" />
+
+  <meta name="description" content="{{ .Description }}" />
+  <meta name="keywords" content="{{ .Params.keywords }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ .Title }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  {{- with .Params.image }}
+  <meta property="og:image" content="{{ . | absURL }}" />
+  <meta property="twitter:image" content="{{ . | absURL }}" />
+  {{- end }}
+  <meta property="twitter:title" content="{{ .Title }}" />
+  <meta property="twitter:description" content="{{ .Description }}" />
+  <meta property="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+  <!-- ── header ──────────────────────────────────────── -->
+  <header class="terminal-header">
+    <nav class="terminal-nav">
+      <a href="/" class="prompt" style="text-decoration:none">root@stormycloud.org:~#</a>
+
+      <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox">
+      <label for="menu-toggle" class="menu-toggle-label">[menu]</label>
+
+      <ul class="nav-main">
+        {{ $i := 0 }}
+        {{ range .Site.Menus.main }}
+          {{ if .HasChildren }}
+            <li class="dropdown">
+              <input type="checkbox" id="sub-{{ $i }}" class="sub-toggle-checkbox">
+              <label for="sub-{{ $i }}" class="sub-toggle-label">[{{ .Name | lower }}]</label>
+              <a href="{{ .URL }}">[{{ .Name | lower }}]</a>
+              <div class="dropdown-panel">
+                {{ range .Children }}
+                  <a href="{{ .URL }}"{{ with .Pre }} target="{{ . }}"{{ end }}><span class="prefix">&gt;</span> {{ .Name | lower }}</a>
+                {{ end }}
+              </div>
+            </li>
+          {{ else }}
+            <li>
+              <a href="{{ .URL }}"{{ with .Pre }} target="{{ . }}"{{ end }}>[{{ .Name | lower }}]</a>
+            </li>
+          {{ end }}
+          {{ $i = add $i 1 }}
+        {{ end }}
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── main ────────────────────────────────────────── -->
+  <main class="terminal-main">
+
+    <!-- hero -->
+    <section class="hero">
+      <pre class="ascii-logo" aria-label="StormyCloud">   _____ __                             ________                __
+  / ___// /_____  _________ ___  __  __/ ____/ /___  __  ______/ /
+  \__ \/ __/ __ \/ ___/ __ `__ \/ / / / /   / / __ \/ / / / __  /
+ ___/ / /_/ /_/ / /  / / / / / / /_/ / /___/ / /_/ / /_/ / /_/ /
+/____/\__/\____/_/  /_/ /_/ /_/\__, /\____/_/\____/\__,_/\__,_/
+                              /____/</pre>
+      <p class="tagline">{{ .Params.hero.tagline }}<span class="cursor">_</span></p>
+    </section>
+
+    <!-- mission -->
+    <section>
+      <h2>[{{ .Params.mission.heading }}]</h2>
+      <div class="panel">
+        <p>{{ .Params.mission.text }}</p>
+        <a href="{{ .Params.mission.link }}" class="panel-link">{{ .Params.mission.link_text }}</a>
+      </div>
+    </section>
+
+    <!-- services -->
+    <section>
+      <h2>[services]</h2>
+      <div class="service-cards">
+        {{ range .Params.services }}
+        <div class="service-card">
+          <h3>{{ .name }}</h3>
+          <p>{{ .description }}</p>
+          <a href="{{ .link }}" class="card-link">&gt; learn_more</a>
+        </div>
+        {{ end }}
+      </div>
+    </section>
+
+    <!-- recent posts -->
+    <section>
+      <h2>[recent_posts]</h2>
+      <div class="log-entries">
+        {{ $posts := where .Site.RegularPages "Section" "blog" }}
+        {{ range first 3 $posts }}
+        <article class="log-entry">
+          <div class="log-meta">
+            <span>{{ .Date.Format "2006-01-02" }}</span>
+            {{ with .Params.author }}
+            <span>{{ index . 0 }}</span>
+            {{ end }}
+          </div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title | lower }}</a></h3>
+          {{ with .Params.summary }}
+          <p>{{ . | plainify | truncate 140 }}</p>
+          {{ end }}
+        </article>
+        {{ end }}
+      </div>
+      <div class="view-all">
+        <a href="/blog/">[view_all_posts]</a>
+      </div>
+    </section>
+
+    <!-- donate cta -->
+    <section>
+      <h2>[{{ .Params.donate.heading }}]</h2>
+      <div class="panel">
+        <p>{{ .Params.donate.text }}</p>
+        <a href="{{ .Params.donate.link }}" class="panel-link">{{ .Params.donate.link_text }}</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── footer ──────────────────────────────────────── -->
+  <footer class="terminal-footer">
+    <div class="footer-links">
+      <a href="https://twitter.com/StormyCloudInc" target="_blank">twitter</a><span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/stormycloudinc/" target="_blank">instagram</a><span class="footer-sep">|</span>
+      <a href="https://discord.com/invite/McAQBXVg9e" target="_blank">discord</a><span class="footer-sep">|</span>
+      <a href="https://www.tiktok.com/@stormycloudinc" target="_blank">tiktok</a><span class="footer-sep">|</span>
+      <a href="https://www.facebook.com/p/StormyCloud-Inc-100086492828511/" target="_blank">facebook</a><span class="footer-sep">|</span>
+      <a href="http://stormycloud.i2p/" target="_blank">i2p</a><span class="footer-sep">|</span>
+      <a href="http://a3px3xerx4b2ho7q4pd6e3di734v7tbse3abze6z6ztb6ox3smbqjjad.onion" target="_blank">tor</a><span class="footer-sep">|</span>
+      <a href="https://gitlab.com/stormycloud-group" target="_blank">gitlab</a>
     </div>
-  </div>
-{{ end }}
+    <div class="footer-copy">&copy; {{ now.Year }} stormycloud inc</div>
+  </footer>
+
+  <!-- analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJZ3JE1PYD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TJZ3JE1PYD');
+  </script>
+
+</body>
+</html>

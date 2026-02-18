@@ -2,8 +2,8 @@
   <div class="nav-inner">
     <!-- Logo -->
     {{- $logo := resources.Get "images/stormycloud.svg" -}}
-    <a href="/" class="nav-logo" title="StormyCloud Inc">
-      <img src="{{ $logo.RelPermalink }}" alt="StormyCloud Inc" width="230" height="22" loading="eager">
+    <a href="/" class="nav-logo" title="StormyCloud Inc" aria-label="StormyCloud Inc home">
+      {{ $logo.Content | safeHTML }}
     </a>
 
     <!-- Right: nav + controls -->

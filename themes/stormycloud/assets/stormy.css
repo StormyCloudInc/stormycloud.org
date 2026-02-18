@@ -15,8 +15,8 @@ header{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:
 [data-theme=light] header{background:rgba(245,247,250,.95)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1400px;margin:0 auto;height:100%}
 .nav-logo{display:flex;align-items:center;text-decoration:none;height:100%;padding:20px 0}
-.nav-logo img{height:22px;width:auto;filter:var(--logo-filter);opacity:var(--logo-opacity);transition:opacity .2s}
-.nav-logo:hover img{opacity:1}
+.nav-logo svg{height:22px;width:auto;display:block;filter:var(--logo-filter);opacity:var(--logo-opacity);transition:opacity .2s}
+.nav-logo:hover svg{opacity:1}
 .nav-right{display:flex;align-items:center;height:100%}
 header nav{height:100%}
 header nav ul{display:flex;align-items:center;list-style:none;margin:0;padding:0;height:100%}
@@ -60,8 +60,8 @@ body#home::before{content:'';position:fixed;inset:0;background-image:url("data:i
 .hero-content{position:relative;z-index:2;width:100%;max-width:900px}
 .hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--blue-sky);margin-bottom:36px;opacity:0;animation:fadeUp .6s ease forwards .2s}
 .hero h1{font-family:'Fraunces',serif;font-size:clamp(48px,6.5vw,92px);font-weight:900;line-height:1.02;color:var(--tx-hi);margin:0 0 28px;opacity:0;animation:fadeUp .7s ease forwards .35s}
-.hero h1 em{font-style:italic;font-weight:700;background:linear-gradient(135deg,var(--blue-sky) 0%,var(--blue-mid) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:16px;font-weight:400;color:var(--tx);max-width:520px;margin:0 auto 60px;line-height:1.78;opacity:0;animation:fadeUp .7s ease forwards .5s}
+.hero h1 em{font-style:italic;font-weight:700;color:var(--blue-sky);background:linear-gradient(135deg,var(--blue-sky) 0%,var(--blue-mid) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;font-weight:300;color:var(--tx);max-width:520px;margin:0 auto 60px;line-height:1.78;opacity:0;animation:fadeUp .7s ease forwards .5s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
 /* Terminal */
@@ -154,8 +154,8 @@ body#home::before{content:'';position:fixed;inset:0;background-image:url("data:i
 .footer-inner{max-width:1200px;margin:0 auto}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;padding-bottom:52px;border-bottom:1px solid var(--border)}
 .footer-logo{display:inline-block;margin-bottom:18px;text-decoration:none}
-.footer-logo img{height:18px;width:auto;filter:var(--logo-filter);opacity:.6;transition:opacity .2s}
-.footer-logo:hover img{opacity:.85}
+.footer-logo svg{height:18px;width:auto;display:block;filter:var(--logo-filter);opacity:.6;transition:opacity .2s}
+.footer-logo:hover svg{opacity:.85}
 .footer-about{font-size:13px;color:var(--muted);line-height:1.75;max-width:280px;margin-bottom:24px}
 .footer-socials{display:flex;flex-wrap:wrap;gap:6px}
 .social-pill{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:4px 12px;border-radius:20px;text-decoration:none;transition:color .2s,border-color .2s}

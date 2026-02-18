@@ -1,176 +1,86 @@
-<header>
-  <style>
-    header {
-    padding: 3px 10px 4px;
-    }
-    .main-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0;
-      background: rgb(0, 0, 0);
-      position: relative;
-    }
-    #homelink img {
-      height: 32px;
-      width: auto;
-      transition: height 0.2s;
-    }
-    nav ul {
-      display: flex;
-      /* gap: 0.1rem; */
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    nav li {
-      position: relative;
-      margin: 0;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 18.6667px;
-      padding: 0.4rem 0.63rem;
-      border-radius: 4px;
-      transition: background 0.15s;
-      display: block;
-    }
-    nav a:hover, nav .dropdown:hover > a {
-      /* background: #3cb7ff;
-      color: #181f33; */
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      left: 0;
-      top: 100%;
-      background: #222b44;
-      min-width: 180px;
-      box-shadow: 0 4px 16px #0003;
-      border-radius: 0 0 8px 8px;
-      z-index: 10;
-    }
-    .dropdown:hover .dropdown-content,
-    .dropdown:focus-within .dropdown-content {
-      display: block;
-    }
-    .dropdown-content a {
-      padding: 0.7rem 1rem;
-      font-size: 0.98rem;
-      color: #fff;
-      border-radius: 0;
-      background: none;
-    }
-    .dropdown-content a:hover {
-      background: #3cb7ff;
-      color: #181f33;
-    }
-    /* Hamburger styles */
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-      margin-left: 1rem;
-      z-index: 200;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-    .nav-toggle span {
-      height: 4px;
-      width: 26px;
-      background: #3cb7ff;
-      margin: 4px 0;
-      border-radius: 2px;
-      display: block;
-      transition: 0.3s;
-    }
-    @media (max-width: 900px) {
-      #homelink img {
-        height: 24px;
-      }
-      nav ul {
-        flex-direction: column;
-        background: #181f33;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        display: none;
-        z-index: 100;
-        border-radius: 0 0 12px 12px;
-        box-shadow: 0 8px 32px #0005;
-      }
-      nav ul.show {
-        display: flex;
-      }
-      .nav-toggle {
-        display: flex;
-        width: 44px;
-        height: 44px;
-        background: #222b44;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px #0002;
-        justify-content: center;
-        align-items: center;
-      }
-      .nav-toggle span {
-        width: 30px;
-        height: 5px;
-        margin: 5px 0;
-        background: #3cb7ff;
-        border-radius: 3px;
-        display: block;
-      }
-      .dropdown-content {
-        position: static;
-        box-shadow: none;
-        background: #222b44;
-        border-radius: 0;
-      }
-    }
-    .nav-toggle:focus {
-      outline: 2px solid #3cb7ff;
-      outline-offset: 2px;
-    }
-  </style>
-  <div class="main-nav">
-    <span id="homelink">
-      <a title="StormyCloud Inc" href="/">
-        <img src="{{ "images/stormycloud.svg" | relURL }}" height="32" alt="StormyCloud Logo">
-      </a>
-    </span>
-    <button class="nav-toggle" tabindex="0" aria-label="Open navigation menu" onclick="this.parentNode.querySelector('nav ul').classList.toggle('show')" onkeypress="if(event.key==='Enter'){this.parentNode.querySelector('nav ul').classList.toggle('show')}">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-    <nav>
-      <ul>
-        {{ $currentPage := . }}
-        {{ range .Site.Menus.main }}
-          {{ if .HasChildren }}
-            <li class="dropdown">
-              <a href="{{ .URL }}" title="{{ .Name }}">{{ .Name }}</a>
-              <div class="dropdown-content">
-                {{ range .Children }}
-                  <a href="{{ .URL }}" title="{{ .Name }}"{{ with .Pre }} target="{{ . }}"{{ end }}>{{ .Name }}</a>
-                {{ end }}
-              </div>
-            </li>
-          {{ else }}
-            <li>
+<header id="site-header">
+  <div class="nav-inner">
+    <!-- Logo -->
+    {{- $logo := resources.Get "images/stormycloud.svg" -}}
+    <a href="/" class="nav-logo" title="StormyCloud Inc">
+      <img src="{{ $logo.RelPermalink }}" alt="StormyCloud Inc" width="230" height="22" loading="eager">
+    </a>
+
+    <!-- Right: nav + controls -->
+    <div class="nav-right">
+      <nav aria-label="Main navigation">
+        <ul>
+          {{- $currentPage := . -}}
+          {{- range .Site.Menus.main }}
+          {{- if .HasChildren }}
+          <li class="dropdown">
+            <a href="{{ .URL }}" title="{{ .Name }}">{{ .Name }}</a>
+            <div class="dropdown-content">
+              {{- range .Children }}
               <a href="{{ .URL }}" title="{{ .Name }}"{{ with .Pre }} target="{{ . }}"{{ end }}>{{ .Name }}</a>
-            </li>
-          {{ end }}
-        {{ end }}
-      </ul>
-    </nav>
+              {{- end }}
+            </div>
+          </li>
+          {{- else }}
+          <li>
+            <a href="{{ .URL }}" title="{{ .Name }}"{{ with .Pre }} target="{{ . }}"{{ end }}{{ if eq .Name "Donate" }} class="nav-donate"{{ end }}>{{ .Name }}</a>
+          </li>
+          {{- end }}
+          {{- end }}
+        </ul>
+      </nav>
+
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+        <!-- Moon icon (shown in dark mode) -->
+        <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <!-- Sun icon (shown in light mode) -->
+        <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </div>
 </header>
+
+<script>
+(function(){
+  // Scroll: darken nav on scroll
+  var hdr = document.getElementById('site-header');
+  window.addEventListener('scroll', function(){
+    hdr.style.borderBottomColor = window.scrollY > 40 ? 'var(--border-hi)' : '';
+  }, {passive: true});
+
+  // Mobile hamburger
+  var navToggle = document.getElementById('nav-toggle');
+  navToggle.addEventListener('click', function(){
+    var open = hdr.classList.toggle('nav-open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+
+  // Theme toggle
+  document.getElementById('theme-toggle').addEventListener('click', function(){
+    var html = document.documentElement;
+    var next = html.dataset.theme === 'light' ? 'dark' : 'light';
+    html.dataset.theme = next;
+    localStorage.setItem('sc-theme', next);
+  });
+})();
+</script>

@@ -1,16 +1,180 @@
 {{ define "main" }}
-  <div class="welcome-section">
-    <span class="logo">
-      <img src="{{ .Params.page_content.image | relURL }}" width="160" alt="{{ .Params.page_content.image_alt }}">
-    </span>
-    <h1>{{ .Params.page_content.title }}</h1>
-    <p class="welcome-text" align="center">
-      {{ .Params.page_content.text }}
-    </p>
-    <div class="welcome-link" align="center">
-      <a href="{{ .Params.page_content.link }}" class="more-details-btn">
-        {{ .Params.page_content.link_text }}
-      </a>
+{{- $stats := .Site.Data.home.stats -}}
+{{- $services := .Site.Data.home.services.services -}}
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">501(c)(3) Nonprofit · Texas · Official I2P Partner</div>
+    <h1>Privacy infrastructure<br>for an <em>open</em> internet.</h1>
+    <p class="hero-sub">StormyCloud operates reseed servers, outproxies, and public DNS for the I2P network — free, open, and accountable to the public.</p>
+
+    <div class="terminal-wrap">
+      <div class="terminal" role="region" aria-label="Network status">
+        <div class="term-bar" aria-hidden="true">
+          <div class="term-dot term-dot-r"></div>
+          <div class="term-dot term-dot-y"></div>
+          <div class="term-dot term-dot-g"></div>
+          <div class="term-title">stormycloud — network status</div>
+        </div>
+        <div class="term-body">
+          <div>
+            <div><span class="term-prompt">❯ </span><span class="term-cmd">reseed status --live</span></div>
+            <br>
+            <div class="term-line"><span class="term-key">Reseed servers</span><span class="term-ok">{{ $stats.reseed.servers_online }} online</span></div>
+            <div class="term-line"><span class="term-key">Daily reseeds</span><span class="term-val">{{ $stats.reseed.daily_reseeds }}</span></div>
+            <div class="term-line"><span class="term-key">Outproxy</span><span class="term-ok">{{ $stats.reseed.outproxy }}</span></div>
+            <div class="term-line"><span class="term-key">I2P partner</span><span class="term-blue">{{ $stats.reseed.i2p_partner }}</span></div>
+            <br>
+            <div><span class="term-prompt">❯ </span><span class="term-cmd">uptime</span></div>
+            <div class="term-line"><span class="term-key">Last 90 days</span><span class="term-ok">{{ $stats.reseed.uptime_90d }}</span></div>
+            <div class="term-line"><span class="term-key">Servers</span><span class="term-val">{{ $stats.reseed.servers_worldwide }}</span></div>
+          </div>
+          <div>
+            <div><span class="term-prompt">❯ </span><span class="term-cmd">dns status</span></div>
+            <br>
+            <div class="term-line"><span class="term-key">Public DNS</span><span class="term-ok">{{ $stats.dns.status }}</span></div>
+            <div class="term-line"><span class="term-key">Avg latency</span><span class="term-val">{{ $stats.dns.avg_latency }}</span></div>
+            <div class="term-line"><span class="term-key">DNSSEC</span><span class="term-ok">{{ $stats.dns.dnssec }}</span></div>
+            <div class="term-line"><span class="term-key">Logging</span><span class="term-ok">{{ $stats.dns.logging }}</span></div>
+            <br>
+            <div><span class="term-prompt">❯ </span><span class="term-cmd">threat-shield</span></div>
+            <div class="term-line"><span class="term-key">DDoS mitigation</span><span class="term-warn">{{ $stats.dns.ddos_status }}</span></div>
+            <div class="term-line"><span class="term-key">Mitigated today</span><span class="term-val">{{ $stats.dns.ddos_mitigated }}</span></div>
+            <br>
+            <div><span class="term-prompt">❯ </span><span class="term-cursor" aria-hidden="true"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
   </div>
+</section>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<div class="section-wrap">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">What we run</span>
+      <h2 class="section-title">Services</h2>
+    </div>
+    <div class="svc-grid">
+      {{- range $i, $svc := $services }}
+      {{- if $svc.featured }}
+      <a class="svc-card svc-featured reveal" href="{{ $svc.url }}">
+        <span class="partner-badge">Official I2P Partner</span>
+        <div class="svc-featured-inner">
+          <div style="display:flex;flex-direction:column;">
+            <div class="svc-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="svc-tag">{{ $svc.tag }}</div>
+            <div class="svc-name">{{ $svc.name }}</div>
+            <div class="svc-desc">{{ $svc.desc }}</div>
+            <div class="svc-footer">
+              <span class="svc-status">{{ $svc.status_label }}</span>
+              <span class="svc-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+          <div class="svc-featured-stats">
+            {{- range $svc.stats }}
+            <div class="svc-stat-box">
+              <div class="svc-stat-num">{{ .num }}</div>
+              <div class="svc-stat-label">{{ .label }}</div>
+            </div>
+            {{- end }}
+          </div>
+        </div>
+      </a>
+      {{- else }}
+      <a class="svc-card reveal reveal-d{{ add $i 0 }}" href="{{ $svc.url }}"{{ if hasPrefix $svc.url "http" }} target="_blank" rel="noopener"{{ end }}>
+        <div class="svc-icon" aria-hidden="true">
+          {{- if eq $svc.icon "dns" }}
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          {{- else if eq $svc.icon "check" }}
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          {{- else if eq $svc.icon "node" }}
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5.5" y2="16"/><line x1="12" y1="8" x2="18.5" y2="16"/><line x1="5.5" y1="16" x2="18.5" y2="16"/></svg>
+          {{- else if eq $svc.icon "radar" }}
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+          {{- else }}
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+          {{- end }}
+        </div>
+        <div class="svc-tag">{{ $svc.tag }}</div>
+        <div class="svc-name">{{ $svc.name }}</div>
+        <div class="svc-desc">{{ $svc.desc }}</div>
+        <div class="svc-footer">
+          <span class="svc-status">{{ $svc.status_label }}</span>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+      {{- end }}
+      {{- end }}
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BLOG ══════════════ -->
+{{- $posts := first 3 (where .Site.RegularPages "Section" "blog") -}}
+{{- if $posts }}
+<div class="section-wrap">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">From the team</span>
+      <h2 class="section-title">Latest posts</h2>
+    </div>
+    <div class="blog-grid">
+      {{- range $i, $post := $posts }}
+      <a class="blog-card reveal reveal-d{{ $i }}" href="{{ $post.RelPermalink }}">
+        <span class="blog-tag">{{ if $post.Params.categories }}{{ index $post.Params.categories 0 }}{{ else }}Blog{{ end }}</span>
+        <div class="blog-title">{{ $post.Title }}</div>
+        <div class="blog-excerpt">{{ $post.Summary | plainify | truncate 120 }}</div>
+        <div class="blog-footer-row">
+          <span class="blog-date">{{ $post.Date.Format "Jan 2, 2006" }}</span>
+          <span class="blog-read">Read →</span>
+        </div>
+      </a>
+      {{- end }}
+    </div>
+    <div class="blog-all reveal">
+      <a href="/blog" class="btn-outline">All posts</a>
+    </div>
+  </div>
+</div>
+{{- end }}
+
+<!-- ══════════════ DONATE STRIP ══════════════ -->
+<div class="donate-strip reveal">
+  <div>
+    <span class="donate-eyebrow">Support the mission</span>
+    <div class="donate-title">Keep the network open.</div>
+    <p class="donate-body">StormyCloud is a 501(c)(3) nonprofit. Every dollar goes directly to server costs, bandwidth, and keeping privacy infrastructure running for anyone who needs it.</p>
+  </div>
+  <div class="donate-right">
+    <a href="/donate" class="btn-donate">Donate now</a>
+    <a href="/cryptocurrency" class="btn-donate" style="background:linear-gradient(135deg,#2e5070,#214478);">Donate crypto</a>
+    <span class="donate-note">Tax-deductible · EIN 88-1652725</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Scroll reveals via IntersectionObserver
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+    },{threshold:0.08});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('visible'); });
+  }
+})();
+</script>
 {{ end }}

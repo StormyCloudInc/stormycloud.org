@@ -1,0 +1,60 @@
+[[services]]
+featured = true
+tag = "Core Network"
+name = "I2P Reseed & Outproxy"
+desc = "Bootstrap infrastructure for the I2P anonymous network — one of the largest reseed and outproxy operations in the ecosystem, keeping thousands of routers connected daily."
+url = "/reseed"
+status = "online"
+status_label = "12 servers online"
+
+  [[services.stats]]
+  num = "~84k"
+  label = "Reseeds per day"
+
+  [[services.stats]]
+  num = "12"
+  label = "Active reseed servers"
+
+  [[services.stats]]
+  num = "99.97%"
+  label = "Uptime · 90 days"
+
+[[services]]
+featured = false
+tag = "DNS"
+name = "Public DNS"
+desc = "Privacy-respecting recursive DNS with DNSSEC validation and no query logging. Fast, reliable, and open for anyone to use."
+url = "/dns"
+status = "online"
+status_label = "Online"
+icon = "dns"
+
+[[services]]
+featured = false
+tag = "I2P Services"
+name = "CheckI2P.com"
+desc = "Public tool to verify your I2P connectivity and diagnose common configuration issues — open to the community."
+url = "https://checki2p.com"
+status = "online"
+status_label = "Online"
+icon = "check"
+
+[[services]]
+featured = false
+tag = "Nodes"
+name = "Cryptocurrency Nodes"
+desc = "Public full nodes for Bitcoin, Monero, and other privacy-respecting networks, supporting a decentralized financial ecosystem."
+url = "/cryptocurrency"
+status = "online"
+status_label = "Online"
+icon = "node"
+
+[[services]]
+featured = false
+tag = "ADS-B"
+name = "ADS-B Tracking"
+desc = "Open aircraft position data contributing to community flight tracking networks. Public data, public good."
+url = "/adsb"
+status = "online"
+status_label = "Online"
+icon = "radar"

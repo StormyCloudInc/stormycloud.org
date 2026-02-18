@@ -1,10 +1,10 @@
+<script>(function(){var t=localStorage.getItem('sc-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');document.documentElement.dataset.theme=t})()</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>{{ .Site.Title}} - {{ .Title }}</title>
+<title>{{ if .IsHome }}{{ .Site.Title }} — Privacy Infrastructure{{ else }}{{ .Site.Title }} - {{ .Title }}{{ end }}</title>
 {{- $styles := resources.Get "stormy.css" | minify | fingerprint -}}
-<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}"
-  crossorigin="anonymous">
-<link rel="icon" href="{{ " images/favicon.png" | relURL }}" type="image/png">
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous">
+<link rel="icon" href="{{ "images/favicon.png" | relURL }}" type="image/png">
 <link rel="canonical" href="{{ .Permalink }}" />
 {{- $image := "" -}}
 {{- if .Params.featured_image -}}
@@ -30,20 +30,3 @@
 <meta property="twitter:image" content="{{ $image }}" />
 {{- end }}
 <meta property="twitter:card" content="summary_large_image" />
-
-{{ if eq .Layout "donate" }}
-<!-- Fundraise Up: the new standard for online giving -->
-<script>(function (w, d, s, n, a) {
-    if (!w[n]) {
-      var l = 'call,catch,on,once,set,then,track,openCheckout'
-        .split(','), i, o = function (n) {
-          return 'function' == typeof n ? o.l.push([arguments]) && o
-            : function () { return o.l.push([n, arguments]) && o }
-        }, t = d.getElementsByTagName(s)[0],
-        j = d.createElement(s); j.async = !0; j.src = 'https://cdn.fundraiseup.com/widget/' + a + '';
-      t.parentNode.insertBefore(j, t); o.s = Date.now(); o.v = 5; o.h = w.location.href; o.l = [];
-      for (i = 0; i < 8; i++)o[l[i]] = o(l[i]); w[n] = o
-    }
-  })(window, document, 'script', 'FundraiseUp', 'AAYKECHT');</script>
-<!-- End Fundraise Up -->
-{{ end }}

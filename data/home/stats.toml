@@ -1,0 +1,15 @@
+[reseed]
+servers_online = "12 / 12"
+daily_reseeds = "~84,000"
+outproxy = "operational"
+i2p_partner = "official ★"
+uptime_90d = "99.97%"
+servers_worldwide = "50+ worldwide"
+
+[dns]
+status = "online"
+avg_latency = "8 ms"
+dnssec = "validated"
+logging = "none"
+ddos_status = "active"
+ddos_mitigated = "3.2M pkt/s"

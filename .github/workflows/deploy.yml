@@ -45,3 +45,26 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: stormycloud
           directory: public
+
+      - name: Deploy to I2P server
+        env:
+          I2P_SERVER_SSH_KEY: ${{ secrets.I2P_SERVER_SSH_KEY }}
+          I2P_SERVER_PORT: ${{ secrets.I2P_SERVER_PORT }}
+          I2P_SERVER_IP: ${{ secrets.I2P_SERVER_IP }}
+          I2P_SERVER_USER: ${{ secrets.I2P_SERVER_USER }}
+        run: |
+          eval $(ssh-agent -s)
+          echo "$I2P_SERVER_SSH_KEY" | tr -d '\r' | ssh-add -
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -p $I2P_SERVER_PORT -H $I2P_SERVER_IP >> ~/.ssh/known_hosts
+          cd public && tar -czf ../site.tar.gz * && cd ..
+          ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "sudo rm -rf /var/www/html/*"
+          scp -P $I2P_SERVER_PORT site.tar.gz $I2P_SERVER_USER@$I2P_SERVER_IP:/tmp/
+          ssh -p $I2P_SERVER_PORT $I2P_SERVER_USER@$I2P_SERVER_IP "
+            cd /tmp &&
+            sudo tar -xzf site.tar.gz -C /var/www/html/ &&
+            sudo chown -R www-data:www-data /var/www/html/ &&
+            sudo chmod -R 755 /var/www/html/ &&
+            rm -f site.tar.gz
+          "

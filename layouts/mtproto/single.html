@@ -1,0 +1,139 @@
+{{ define "main" }}
+{{ $clearnetIP := "23.128.248.150" }}
+{{ $clearnetPort := "3128" }}
+{{ $i2pAddr := "2qzhdgjztbldasmjo5ek522kdruyhdo3izek5bjbl6rfnzauhzqa.b32.i2p" }}
+{{ $secretPadded := "ddc5d1717f50bdab002e1ba52d9ed8f2fe" }}
+{{ $secretPlain := "c5d1717f50bdab002e1ba52d9ed8f2fe" }}
+{{ $tgLink := printf "https://t.me/proxy?server=%s&port=%s&secret=%s" $clearnetIP $clearnetPort $secretPadded }}
+
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ OVERVIEW ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">What is an MTProto Proxy?</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>MTProto is the custom transport protocol Telegram uses to carry messages between the app and its servers. An <strong>MTProto proxy</strong> is a lightweight relay that forwards that traffic on behalf of the client, letting users connect to Telegram from networks where the service is blocked or heavily filtered. Unlike a traditional SOCKS or HTTP proxy, MTProto proxies only carry Telegram traffic and speak Telegram's own obfuscated wire format, which makes them difficult for censors to fingerprint.</p>
+      <p>StormyCloud runs a free, public MTProto proxy reachable over both the clearnet and the I2P network. There is no registration, no logging, and no rate limits. The proxy is based on Telegram's official reference implementation, which is open source and available on <a href="https://github.com/TelegramMessenger/MTProxy" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ENDPOINTS ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Proxy Endpoints</h2>
+    </div>
+
+    <div class="mission-grid">
+
+      <!-- Clearnet -->
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">Clearnet</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">Standard MTProto proxy reachable from any network that can route to the public internet. Works with the official Telegram apps on every platform.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Server</span>
+          <code class="crypto-ep-addr">{{ $clearnetIP }}</code>
+          <span class="crypto-ep-label">Port</span>
+          <code class="crypto-ep-addr">{{ $clearnetPort }}</code>
+          <span class="crypto-ep-label">Secret</span>
+          <code class="crypto-ep-addr">{{ $secretPadded }}</code>
+        </div>
+        <div style="margin-top: 18px;">
+          <a href="{{ $tgLink | safeURL }}" class="btn-outline" target="_blank" rel="noopener noreferrer">Open in Telegram</a>
+        </div>
+      </div>
+
+      <!-- I2P -->
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">I2P</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">The same proxy, reachable as a hidden service over the I2P network. Create a standard I2P client tunnel pointing at the destination below and connect Telegram to the local port that tunnel exposes.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Server</span>
+          <code class="crypto-ep-addr">{{ $i2pAddr }}</code>
+          <span class="crypto-ep-label">Secret</span>
+          <code class="crypto-ep-addr">{{ $secretPadded }}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SECRET FORMATS ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Secret Formats</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>MTProto proxy secrets come in two flavors. Most modern Telegram clients accept either, but the padded form is recommended because it enables random padding on the wire, making the traffic look less distinctive to deep-packet inspection.</p>
+    </div>
+
+    <div class="mission-grid" style="margin-top: 28px;">
+      <div class="mission-card reveal">
+        <div class="mission-label">With Random Padding (recommended)</div>
+        <p class="mission-text">Prefixed with <code>dd</code>, this format tells the client to enable random padding on every packet. Hides packet-length patterns and defeats basic traffic fingerprinting.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Secret</span>
+          <code class="crypto-ep-addr">{{ $secretPadded }}</code>
+        </div>
+      </div>
+
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">Plain Secret</div>
+        <p class="mission-text">The raw 16-byte secret without the <code>dd</code> prefix. Older clients that do not support random padding fall back to this format automatically.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Secret</span>
+          <code class="crypto-ep-addr">{{ $secretPlain }}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HOW TO CONNECT ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">How to Connect</h2>
+    </div>
+
+    <div class="docs-grid">
+      <div class="doc-card reveal">
+        <div class="doc-name">1. One-click (clearnet)</div>
+        <p class="doc-desc">Tap the button below on any device with Telegram installed. Telegram will prompt you to add StormyCloud's proxy with the server, port, and secret already filled in.</p>
+        <div style="margin-top: 16px;">
+          <a href="{{ $tgLink | safeURL }}" class="btn-outline" target="_blank" rel="noopener noreferrer">Open in Telegram</a>
+        </div>
+      </div>
+
+      <div class="doc-card reveal reveal-d1">
+        <div class="doc-name">2. Manual setup</div>
+        <p class="doc-desc">In Telegram, go to <strong>Settings → Data and Storage → Proxy Settings → Add Proxy</strong>, choose <strong>MTProto</strong>, and enter the server, port, and secret listed above.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d2">
+        <div class="doc-name">3. Over I2P</div>
+        <p class="doc-desc">In your I2P router console, open <strong>I2P Hidden Services Manager → New Client Tunnel</strong> and create a <strong>Standard</strong> tunnel pointing at the destination above. Pick any free local port (for example <code>127.0.0.1:1080</code>), save, and start the tunnel. Then in Telegram add an MTProto proxy with that local address and port and the secret listed above.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

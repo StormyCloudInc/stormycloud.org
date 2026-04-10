@@ -1,0 +1,27 @@
+{{ define "main" }}
+<!-- ══════════════ PAGE HEADER ══════════════ -->
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>The <em>Guides</em></h1>
+    <p class="page-header-sub">Step-by-step tutorials for installing, configuring, and contributing to the I2P network.</p>
+  </div>
+</div>
+
+<!-- ══════════════ GUIDE LISTING ══════════════ -->
+<div class="blog-listing">
+  <div class="blog-grid">
+    {{ range .Pages }}
+    <a class="blog-card reveal" href="{{ .RelPermalink }}">
+      {{ with .Params.image }}<img class="blog-card-img" src="{{ . }}" alt="">{{ end }}
+      <div class="blog-card-content">
+        <div class="blog-tag">{{ .Params.tag }}</div>
+        <div class="blog-card-title">{{ .Title }}</div>
+        <div class="blog-card-excerpt">{{ .Description }}</div>
+        <div class="blog-card-meta">Read guide →</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

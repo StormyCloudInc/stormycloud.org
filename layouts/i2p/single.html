@@ -1,0 +1,252 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ WHAT IS I2P? ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">What is I2P?</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>I2P (the Invisible Internet Project) is a decentralized, peer-to-peer network that uses garlic routing and multiple layers of encryption to protect both the sender and receiver of every communication. Unlike traditional VPNs or Tor, I2P is designed from the ground up as a self-contained network — an overlay internet where privacy is the default.</p>
+      <p>Volunteers around the world operate the network, routing traffic through thousands of nodes to ensure no single point of failure or surveillance. I2P supports secure web browsing, private email, anonymous file sharing, and encrypted messaging — all without exposing your identity or location.</p>
+      <p>I2P runs on Windows, Linux, and Mac with multiple implementations available: <a href="https://i2p.net" target="_blank" rel="noopener noreferrer"><strong>I2P</strong></a> (the Java reference client), <a href="https://i2pplus.github.io" target="_blank" rel="noopener noreferrer"><strong>I2P+</strong></a> (an enhanced fork with performance improvements), and <a href="https://i2pd.website" target="_blank" rel="noopener noreferrer"><strong>I2PD</strong></a> (a lightweight C++ implementation).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HOW IT WORKS ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">How It Works</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>I2P uses <strong>garlic routing</strong> — bundling multiple encrypted messages together and passing them through a series of volunteer-operated routers. Each router only knows the previous and next hop, never the full path. This makes traffic analysis extremely difficult.</p>
+    </div>
+
+    <!-- Traffic flow diagram -->
+    <div class="i2p-flow reveal">
+      <div class="i2p-flow-row">
+        <!-- Your Device -->
+        <div class="i2p-flow-node">
+          <div class="i2p-flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="i2p-flow-label">Your Device</div>
+          <div class="i2p-flow-detail">I2P router encrypts your message in multiple layers</div>
+        </div>
+
+        <div class="i2p-flow-arrow">
+          <svg viewBox="0 0 48 16" preserveAspectRatio="none"><line x1="0" y1="8" x2="42" y2="8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><polyline points="38,3 44,8 38,13" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="i2p-flow-arrow-label">Encrypted</span>
+        </div>
+
+        <!-- Tunnel Hops -->
+        <div class="i2p-flow-node i2p-flow-tunnel">
+          <div class="i2p-flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/></svg>
+          </div>
+          <div class="i2p-flow-label">Tunnel Hops</div>
+          <div class="i2p-flow-detail">Each router peels one encryption layer and forwards to the next</div>
+        </div>
+
+        <div class="i2p-flow-arrow">
+          <svg viewBox="0 0 48 16" preserveAspectRatio="none"><line x1="0" y1="8" x2="42" y2="8" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><polyline points="38,3 44,8 38,13" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="i2p-flow-arrow-label">Re-encrypted</span>
+        </div>
+
+        <!-- Destination -->
+        <div class="i2p-flow-node">
+          <div class="i2p-flow-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="i2p-flow-label">Destination</div>
+          <div class="i2p-flow-detail">Only the final recipient can decrypt the message</div>
+        </div>
+      </div>
+
+      <!-- Encryption layers visual -->
+      <div class="i2p-layers">
+        <div class="i2p-layer i2p-layer-3">
+          <div class="i2p-layer i2p-layer-2">
+            <div class="i2p-layer i2p-layer-1">
+              <span>Your Message</span>
+            </div>
+          </div>
+        </div>
+        <div class="i2p-layers-caption">Three layers of encryption — like nesting envelopes inside envelopes</div>
+      </div>
+    </div>
+
+    <!-- Key concepts -->
+    <div class="mission-grid" style="margin-top: 36px;">
+      <div class="mission-card reveal">
+        <div class="mission-label">Garlic Routing</div>
+        <p class="mission-text">Multiple messages are bundled together into a single encrypted "clove" and sent through the network. This makes it impossible for any observer to know which message belongs to which conversation.</p>
+      </div>
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">Unidirectional Tunnels</div>
+        <p class="mission-text">I2P uses separate tunnels for sending and receiving. Your outbound traffic takes a completely different path than your inbound traffic, making correlation attacks far more difficult.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ OUR I2P SERVICES ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Our I2P Services</h2>
+    </div>
+
+    <div class="mission-grid">
+      <!-- Reseed Servers -->
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">Reseed Servers</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">Reseed servers bootstrap new users onto the I2P network. When you first install I2P, your router needs to discover peers — our reseed servers provide that initial set of router contacts so you can join the network.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">URL</span>
+          <code class="crypto-ep-addr">reseed.stormycloud.org/i2pseeds.su3</code>
+        </div>
+      </div>
+
+      <!-- Telegram MTProto Proxy -->
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">Telegram MTProto Proxy</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">Access Telegram through I2P with our MTProto proxy. Route your Telegram traffic over the I2P network for an additional layer of privacy — no I2P installation required on your device.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Server</span>
+          <code class="crypto-ep-addr">2qzhdgjztbldasmjo5ek522kdruyhdo3izek5bjbl6rfnzauhzqa.b32.i2p</code>
+          <span class="crypto-ep-label">Secret</span>
+          <code class="crypto-ep-addr">ddc5d1717f50bdab002e1ba52d9ed8f2fe</code>
+        </div>
+        <div style="margin-top: 18px;">
+          <a href="/mtproto" class="btn-outline">View proxy details</a>
+        </div>
+      </div>
+
+      <!-- I2P+ Router Fleet -->
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">I2P Router Fleet</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">We operate over 100 I2P routers with floodfill enabled, actively participating in the network's distributed database. These routers help other nodes discover peers, resolve destinations, and maintain the health of the network.</p>
+      </div>
+
+      <!-- Outproxy -->
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">Outproxy</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">Our outproxy bridges the I2P network and the regular internet, letting I2P users access clearnet websites while maintaining anonymity. It processes thousands of requests per second, supports Tor .onion addresses, and routes all DNS through StormyCloud's own privacy-first servers.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Address</span>
+          <code class="crypto-ep-addr">exit.stormycloud.i2p</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RESOURCES & GUIDES ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Resources &amp; Guides</h2>
+    </div>
+
+    <div class="docs-grid">
+      <a class="doc-card reveal" href="/install-i2p-linux">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="doc-name">Install I2P on Linux</div>
+        <p class="doc-desc">Step-by-step instructions for installing I2P on all major Linux distributions including Debian, Ubuntu, Fedora, and more.</p>
+        <div class="doc-link">Read guide ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d1" href="/install-i2p">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="doc-name">Install I2P+ on Linux</div>
+        <p class="doc-desc">Step-by-step guide for installing I2P+ on Linux systems, from package setup to first connection.</p>
+        <div class="doc-link">Read guide ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d2" href="/install-i2p-windows">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="doc-name">Install I2P+ on Windows</div>
+        <p class="doc-desc">Get I2P+ running on Windows with our walkthrough covering installation, configuration, and troubleshooting.</p>
+        <div class="doc-link">Read guide ↗</div>
+      </a>
+
+      <a class="doc-card reveal" href="/accessing-i2p">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="doc-name">Accessing I2P</div>
+        <p class="doc-desc">Learn how to browse I2P sites, use eepsites, configure your browser, and access I2P applications.</p>
+        <div class="doc-link">Read guide ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d1" href="https://i2p.net/en/docs/overview/intro/" target="_blank" rel="noopener noreferrer">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <div class="doc-name">Introduction to I2P</div>
+        <p class="doc-desc">Official I2P documentation covering how the network works, its architecture, and core concepts.</p>
+        <div class="doc-link">Read docs ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d2" href="https://i2p.net/en/docs/guides/creating-an-i2p-eepsite/" target="_blank" rel="noopener noreferrer">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="doc-name">Create an I2P Eepsite</div>
+        <p class="doc-desc">Learn how to set up and host your own website on the I2P network using an eepsite.</p>
+        <div class="doc-link">Read guide ↗</div>
+      </a>
+    </div>
+  </div>
+</div>
+{{ end }}

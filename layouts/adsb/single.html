@@ -1,0 +1,79 @@
+{{ define "main" }}
+{{ $adsb := site.Data.adsb }}
+{{ $cur := $adsb.current }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>ADS-B <em>Receivers</em></h1>
+    <p class="page-header-sub">{{ .Params.subtitle }}</p>
+  </div>
+</div>
+
+<!-- ══════════════ RECEIVERS + STATS ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="adsb-receiver-header reveal">
+      {{ with $adsb.generated_at }}<span class="adsb-timestamp">Updated {{ dateFormat "Jan 2 · 15:04 UTC" (time .) }}</span>{{ end }}
+    </div>
+
+    <!-- Stats summary cards -->
+    <div class="stats-summary reveal">
+      <div class="stat-card">
+        <div class="stat-period">Aircraft (24h)</div>
+        <div class="stat-value">{{ with $cur.aircraft_total_24h }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</div>
+        <div class="stat-detail">{{ with $cur.aircraft_with_position_24h }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }} with position</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-period">Max Range</div>
+        <div class="stat-value">{{ with $cur.distance_max_km }}{{ $v := printf "%v" . }}{{ if findRE `^[\d.]+([eE][+-]?\d+)?$` $v }}{{ lang.FormatNumberCustom 1 (float $v) }}{{ else }}{{ $v }}{{ end }}{{ else }}--{{ end }}</div>
+        <div class="stat-detail">km</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-period">Messages / sec</div>
+        {{ $rates := $adsb.history_24h.messages_rate }}
+        <div class="stat-value">{{ with $rates }}{{ with last 1 . }}{{ partial "fmt-number.html" (index . 0).per_sec }}{{ end }}{{ else }}--{{ end }}</div>
+        <div class="stat-detail">latest rate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ POLAR RANGE MAP ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Polar Range Map</h2>
+    </div>
+    <div class="adsb-map-wrap reveal">
+      <img class="adsb-map-img" src="/images/adsb/adsb-polar-map.png" alt="ADS-B polar range coverage map" loading="lazy" decoding="async">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 24H CHARTS ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">24-Hour Trends</h2>
+    </div>
+    <div class="adsb-chart-grid">
+      <div class="adsb-chart-card reveal">
+        <div class="adsb-chart-title">Aircraft Count</div>
+        <img class="adsb-chart-img" src="/images/adsb/adsb-chart-aircraft.png" alt="Aircraft count 24-hour trend" loading="lazy" decoding="async">
+      </div>
+      <div class="adsb-chart-card reveal reveal-d1">
+        <div class="adsb-chart-title">Message Rate</div>
+        <img class="adsb-chart-img" src="/images/adsb/adsb-chart-messages.png" alt="Message rate 24-hour trend" loading="lazy" decoding="async">
+      </div>
+      <div class="adsb-chart-card reveal">
+        <div class="adsb-chart-title">Max Distance (km)</div>
+        <img class="adsb-chart-img" src="/images/adsb/adsb-chart-distance.png" alt="Max distance 24-hour trend" loading="lazy" decoding="async">
+      </div>
+      <div class="adsb-chart-card reveal reveal-d1">
+        <div class="adsb-chart-title">Signal Average (dBFS)</div>
+        <img class="adsb-chart-img" src="/images/adsb/adsb-chart-signal.png" alt="Signal average 24-hour trend" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

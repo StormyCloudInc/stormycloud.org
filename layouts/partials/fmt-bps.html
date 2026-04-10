@@ -1,0 +1,7 @@
+{{- $b := float . -}}
+{{- if ge $b 1e12 -}}{{ printf "%.1f Tbps" (div $b 1e12) }}
+{{- else if ge $b 1e9 -}}{{ printf "%.2f Gbps" (div $b 1e9) }}
+{{- else if ge $b 1e6 -}}{{ printf "%.0f Mbps" (div $b 1e6) }}
+{{- else if ge $b 1e3 -}}{{ printf "%.0f Kbps" (div $b 1e3) }}
+{{- else -}}{{ printf "%.0f bps" $b }}
+{{- end -}}

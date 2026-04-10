@@ -1,0 +1,79 @@
+{{ define "main" }}
+{{- $crypto := site.Data.crypto -}}
+{{- $xmr := $crypto.monero | default dict -}}
+{{- $btc := $crypto.bitcoin | default dict -}}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ MONERO ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Monero (XMR)</h2>
+    </div>
+
+    <div class="crypto-card reveal">
+      <div class="crypto-card-top">
+        <div class="crypto-info">
+          <div class="crypto-status-row">
+            {{ if $xmr.synchronized }}
+            <span class="crypto-status synced">Synced</span>
+            {{ else }}
+            <span class="crypto-status unsynced">Syncing</span>
+            {{ end }}
+          </div>
+          <p class="crypto-desc">Our public Monero node provides restricted RPC access over Clearnet, I2P, and Tor.</p>
+
+          <div class="crypto-endpoints">
+            <div class="crypto-endpoint">
+              <span class="crypto-ep-label">Clearnet</span>
+              <code class="crypto-ep-addr">xmr.stormycloud.org:18089</code>
+            </div>
+            <div class="crypto-endpoint">
+              <span class="crypto-ep-label">I2P</span>
+              <code class="crypto-ep-addr">xmr.stormycloud.i2p</code>
+            </div>
+            <div class="crypto-endpoint">
+              <span class="crypto-ep-label">Tor</span>
+              <code class="crypto-ep-addr">a6orjo6aiotog3njppja5jwnd3rexzfjiejxnojvw74p3kma45fundid.onion:18089</code>
+            </div>
+          </div>
+        </div>
+
+        {{ partial "svg-peer-chart.html" (dict "history" $xmr.peers_history_24h "id" "xmr" "color" "var(--accent)") }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BITCOIN ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Bitcoin (BTC)</h2>
+    </div>
+
+    <div class="crypto-card reveal">
+      <div class="crypto-card-top">
+        <div class="crypto-info">
+          <div class="crypto-status-row">
+            {{ if $btc.synchronized }}
+            <span class="crypto-status synced">Synced</span>
+            {{ else }}
+            <span class="crypto-status unsynced">Syncing</span>
+            {{ end }}
+          </div>
+          <p class="crypto-desc">Full Bitcoin node with Tor and I2P support enabled, contributing to network decentralization and transaction validation.</p>
+        </div>
+
+        {{ partial "svg-peer-chart.html" (dict "history" $btc.peers_history_24h "id" "btc" "color" "#f7931a") }}
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

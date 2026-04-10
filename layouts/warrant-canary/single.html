@@ -1,0 +1,85 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>Warrant <em>Canary</em></h1>
+    <p class="page-header-sub">{{ .Params.subtitle }}</p>
+  </div>
+</div>
+
+<!-- ══════════════ OUR PHILOSOPHY ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Philosophy</span>
+      <h2 class="section-title">Our Approach to Privacy</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal" style="grid-column: 1 / -1;">
+        <div class="mission-label">Zero Data Retention</div>
+        <p class="mission-text"><strong>StormyCloud operates on a simple philosophy: we do not retain logs.</strong></p>
+        <ul class="canary-list">
+          <li>All servers automatically purge logs every 15 minutes</li>
+          <li>We do not keep logs of any kind</li>
+          <li>We do not provide information to any law enforcement agency</li>
+          <li>All public inquiries from law enforcement will be published on this page</li>
+        </ul>
+        <p class="mission-text" style="margin-top:16px;">Because we don't retain data, we cannot provide what we don't have.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ WARRANT CANARY ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Signed Statement</span>
+      <h2 class="section-title">Warrant Canary</h2>
+    </div>
+
+    <div class="canary-body reveal">
+      <p>A signed warrant canary will be published quarterly (January, April, July, and October) to ensure that StormyCloud has not been compromised by any third-party using a subpoena. You can download the <a href="/files/message.txt.asc">warrant</a> and the <a href="/files/public.asc">PGP key</a>.</p>
+
+      <pre class="canary-pgp"><code>Hash: SHA256
+
+StormyCloud Inc, January 2026
+
+StormyCloud Inc has not produced any information in response to a
+secret subpoena, such as one served under 18 U.S.C. Section 2709(c)
+of the U.S. Patriot Act, and has not built "backdoors" for any
+government into our products. All government requests for user data
+need to come through the front door (i.e., by serving valid legal
+process upon StormyCloud).
+
+-----BEGIN PGP MESSAGE-----
+
+iHUEARYIAB0WIQRHv6RMhvlUPNzkuZWLRD9vEHc9FAUCaQaLGwAKCRCLRD9vEHc9
+FOQ8AP9CPJKkbPdp/6Bl9F3B8dKcJMO+4GzKATUWdaPfFxPPDQD/dkOGgX8LSMGv
+5JjODkJf8qjXQdRcreq5aeTV5pNffwA=
+=9bgf
+
+-----END PGP MESSAGE-----</code></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ VERIFY ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Verification</span>
+      <h2 class="section-title">How to Verify</h2>
+    </div>
+
+    <div class="canary-body reveal">
+      <p>Run the following command to download and verify the warrant canary signature:</p>
+      <pre class="canary-pgp"><code>wget -q http://www.stormycloud.org/files/message.txt.asc -O message.txt.asc && \
+wget -q http://www.stormycloud.org/files/public.asc -O public.asc && \
+gpg --import public.asc && \
+gpg --verify message.txt.asc</code></pre>
+    </div>
+  </div>
+</div>
+{{ end }}

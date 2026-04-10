@@ -1,94 +1,74 @@
 ---
-title: "SSH Tunnel Creation Guide"
-description: "Learn how to create an SSH Tunnel with the step-by-step guide from StormyCloud Inc, a non-profit organization dedicated to Internet freedom."
-url: /create-ssh-tunnel/
-layout: install-i2p
-image: "images/imagelogo.png" #used in og:meta image
-bodyId: createssh
-page_content:
-  h1_Heading: "How to create an SSH Tunnel"
-  header_image: images/sshtunnel.webp
-  sections:
-    - type: heading2
-      text: "What is an SSH Tunnel?"
-    - type: paragraph
-      text: |
-        An SSH tunnel is a method of routing data and information securely over an encrypted SSH (Secure Shell) connection. Imagine it as a secure pipeline through the internet where data can travel safely, away from prying eyes. It's like sending a letter in a sealed, tamper-proof envelope instead of a postcard. SSH tunneling is often used to securely access remote systems, like a server, by creating this protected passageway for data transmission. The tunnel encrypts the data to keep it safe from interception, and only the intended recipient can decrypt and use it.
-    - type: heading3
-      text: Creating SSH Tunnel on Windows
-    - type: paragraph
-      text: |
-        For those utilizing a Windows operating system, we suggest employing <a target="_blank" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">Putty</a>, a widely recognized tool, to manage your SSH sessions effectively.
-    - type: paragraph
-      text: | 
-        Step 1 - Open Putty and enter the IP or Host Name for the remote server.
-    - type: image
-      src: "/images/sshtunnel_1.webp"
-      alt: "Create SSH Tunnel"
-    - type: paragraph
-      text: Step 2 - Expand the SSH tab and click on Tunnels.
-    - type: paragraph
-      text: In the Source port is a local port we can select, this number can be anything from 1-65535 as long as   its not being used by anything else.
-    - type: paragraph
-      text: "In the Destination type in:"
-    - type: code
-      title: ""
-      content: 127.0.0.1:7657
-
-    - type: list
-      title: ""
-      items:
-        - "127.0.0.1: This is the IP for the localhost running on the remote server, this is also the destination we aim to reach via the SSH server."
-        - "7657 - This is the destination port, assigned to the I2P console."
-    - type: image
-      src: "/images/sshtunnel_2.webp"
-      alt: "Create SSH Tunnel"
-
-    - type: paragraph
-      text: Step 3 - Click on Open and type in your username and password. If successful you will see the screen below.
-    - type: image
-      src: "/images/sshtunnel_3.webp"
-      alt: "Create SSH Tunnel"
-
-    - type: heading3
-      text: Configuring SSH Tunnel on Linux
-    - type: paragraph
-      text: | 
-        Step 1 - To create an SSH tunnel on Linux open the terminal.
-    - type: image
-      src: "/images/sshtunnel_4.webp"
-      alt: "Create SSH Tunnel"
-    - type: paragraph
-      text: Step 2 - Enter the following command into the terminal
-    - type: code
-      title: ""
-      content: ssh -L 7657:127.0.0.1:7657 i2p@20.228.143.58
-    - type: list
-      title: ""
-      items:
-        - "7657 - This is the local port we can select, this number can be anything from 1-65535 as long as its not being used by anything else."
-        - "127.0.0.1: This is the IP for the localhost running on the remote server, this is also the destination we aim to reach via the SSH server."
-        - 7657 - This is the destination port, assigned to the I2P console.
-        - i2p - This is the username used to log into the remote server. This should be different for everyone.
-        - 20.228.143.58 - This is the IP of the remote server that I2P is installed on.
-    - type: heading3
-      text: Creating SSH Tunnel on Mac
-    - type: paragraph
-      text: Step 1 - To create an SSH tunnel on Mac open the terminal.
-    - type: image
-      src: "/images/sshtunnel_5.webp"
-      alt: "Create SSH Tunnel"
-    - type: paragraph
-      text: Step 2 - Enter the following command into the terminal
-    - type: code
-      title: ""
-      content: ssh -L 7657:127.0.0.1:7657 i2p@20.228.143.58
-    - type: list
-      title: ""
-      items:
-        - "7657 - This is the local port we can select, this number can be anything from 1-65535 as long as its not being used by anything else."
-        - "127.0.0.1: This is the IP for the localhost running on the remote server, this is also the destination we aim to reach via the SSH server."
-        - 7657 - This is the destination port, assigned to the I2P console.
-        - i2p - This is the username used to log into the remote server. This should be different for everyone.
-        - 20.228.143.58 - This is the IP of the remote server that I2P is installed on.
+title: "How to Create an SSH Tunnel"
+description: "Route data securely over an encrypted SSH connection with platform-specific instructions for Windows, Linux, and Mac."
+tag: "Networking"
+image: "/images/sshtunnel.webp"
+weight: 4
 ---
+
+## What is an SSH Tunnel?
+
+An SSH tunnel is a method of routing data and information securely over an encrypted SSH (Secure Shell) connection. Think of it like sending correspondence in a sealed envelope rather than a postcard. SSH tunneling enables secure remote system access through an encrypted data passageway that prevents interception.
+
+## Creating SSH Tunnel on Windows
+
+Windows users should use [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html), a recognized SSH management tool.
+
+**Step 1:** Open PuTTY and enter the IP or Host Name for the remote server.
+
+![PuTTY host configuration](/images/sshtunnel_1.webp)
+
+**Step 2:** Expand the SSH tab and click on Tunnels. Source port can be any number from 1-65535 (unused). Enter the destination as:
+
+```text
+127.0.0.1:7657
+```
+
+- `127.0.0.1` - Localhost IP on remote server
+- `7657` - Destination port assigned to I2P console
+
+![PuTTY tunnel configuration](/images/sshtunnel_2.webp)
+
+**Step 3:** Click Open and enter username and password.
+
+![PuTTY login](/images/sshtunnel_3.webp)
+
+## Configuring SSH Tunnel on Linux
+
+**Step 1:** Open the terminal.
+
+![Linux terminal](/images/sshtunnel_4.webp)
+
+**Step 2:** Enter the following command into the terminal:
+
+```bash
+ssh -L 7657:127.0.0.1:7657 i2p@20.228.143.58
+```
+
+Parameter breakdown:
+
+- `7657` (first) - Local port selection (1-65535, unused)
+- `127.0.0.1` - Localhost IP on remote server (destination)
+- `7657` (second) - Destination port for I2P console
+- `i2p` - Username for remote server login (varies per user)
+- `20.228.143.58` - Remote server IP with I2P installation
+
+## Creating SSH Tunnel on Mac
+
+**Step 1:** Open the terminal.
+
+![Mac terminal](/images/sshtunnel_5.webp)
+
+**Step 2:** Enter the following command into the terminal:
+
+```bash
+ssh -L 7657:127.0.0.1:7657 i2p@20.228.143.58
+```
+
+Parameter breakdown:
+
+- `7657` (first) - Local port selection (1-65535, unused)
+- `127.0.0.1` - Localhost IP on remote server (destination)
+- `7657` (second) - Destination port for I2P console
+- `i2p` - Username for remote server login (varies per user)
+- `20.228.143.58` - Remote server IP with I2P installation

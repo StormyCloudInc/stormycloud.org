@@ -1,0 +1,90 @@
+{{- /* Generates SVG polyline points and area path for peer history charts.
+       Input: dict "history" (array of {t, in, out}) "id" (string) "w" (int) "h" (int) "color" (string) */ -}}
+{{- $history := .history -}}
+{{- $id := .id -}}
+{{- $w := default 280 .w -}}
+{{- $h := default 80 .h -}}
+{{- $color := default "var(--accent)" .color -}}
+{{- $pad := 4.0 -}}
+
+{{- if and $history (gt (len $history) 0) -}}
+  {{- $points := slice -}}
+  {{- $max := 0.0 -}}
+  {{- $min := 9999999.0 -}}
+  {{- range $history -}}
+    {{- $total := add (float .in) (float .out) -}}
+    {{- if gt $total $max -}}{{- $max = $total -}}{{- end -}}
+    {{- if lt $total $min -}}{{- $min = $total -}}{{- end -}}
+    {{- $points = $points | append $total -}}
+  {{- end -}}
+  {{- $range := sub $max $min -}}
+  {{- if eq $range 0.0 -}}{{- $range = 1.0 -}}{{- end -}}
+  {{- $count := len $points -}}
+  {{- $coords := slice -}}
+  {{- range $i, $val := $points -}}
+    {{- $x := 0.0 -}}
+    {{- if eq $count 1 -}}
+      {{- $x = div (float $w) 2.0 -}}
+    {{- else -}}
+      {{- $x = div (mul (float $i) (float $w)) (sub (float $count) 1.0) -}}
+    {{- end -}}
+    {{- $y := add $pad (div (mul (sub $max $val) (sub (float $h) (mul $pad 2.0))) $range) -}}
+    {{- $coords = $coords | append (printf "%.1f,%.1f" $x $y) -}}
+  {{- end -}}
+
+  {{- /* Y-axis labels */ -}}
+  {{- $fmtMax := "" -}}
+  {{- $fmtMin := "" -}}
+  {{- if ge $max 1000.0 -}}
+    {{- $fmtMax = printf "%.0fk" (div $max 1000.0) -}}
+  {{- else -}}
+    {{- $fmtMax = printf "%.0f" $max -}}
+  {{- end -}}
+  {{- if ge $min 1000.0 -}}
+    {{- $fmtMin = printf "%.0fk" (div $min 1000.0) -}}
+  {{- else -}}
+    {{- $fmtMin = printf "%.0f" $min -}}
+  {{- end -}}
+
+<div class="crypto-chart-wrap">
+  <div class="crypto-chart-header">
+    <span class="crypto-chart-title">Peers · 24h</span>
+    <span class="crypto-chart-value">{{ printf "%.0f" (index $points (sub $count 1)) }}</span>
+  </div>
+  <div class="crypto-chart-body">
+    <div class="chart-y-axis">
+      <span>{{ $fmtMax }}</span>
+      <span>{{ $fmtMin }}</span>
+    </div>
+    <div class="crypto-chart">
+      <svg class="peer-chart" viewBox="0 0 {{ $w }} {{ $h }}" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="{{ $id }}-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{{ $color }}" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="{{ $color }}" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="chart-area" d="M{{ index $coords 0 }}{{ range $i, $c := $coords }}{{ if gt $i 0 }} L{{ $c }}{{ end }}{{ end }} L{{ (index $coords (sub $count 1)) | replaceRE ",.*" "" }},{{ $h }} L{{ (index $coords 0) | replaceRE ",.*" "" }},{{ $h }} Z" fill="url(#{{ $id }}-fill)"/>
+        <polyline class="chart-line{{ if ne $color "var(--accent)" }} {{ $id }}{{ end }}" points="{{ delimit $coords " " }}"/>
+      </svg>
+    </div>
+  </div>
+  <div class="chart-x-axis">
+    <span>24h ago</span>
+    <span>12h</span>
+    <span>Now</span>
+  </div>
+</div>
+{{- else -}}
+<div class="crypto-chart-wrap">
+  <div class="crypto-chart-header">
+    <span class="crypto-chart-title">Peers · 24h</span>
+    <span class="crypto-chart-value">—</span>
+  </div>
+  <div class="crypto-chart-body">
+    <div class="chart-y-axis"><span>—</span><span>—</span></div>
+    <div class="crypto-chart"><svg class="peer-chart" viewBox="0 0 {{ $w }} {{ $h }}" preserveAspectRatio="none"><polyline class="chart-line" points="0,40 {{ $w }},40"/></svg></div>
+  </div>
+  <div class="chart-x-axis"><span>24h ago</span><span>12h</span><span>Now</span></div>
+</div>
+{{- end -}}

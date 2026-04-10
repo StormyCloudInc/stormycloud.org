@@ -1,0 +1,79 @@
+{{- /* Generates SVG traffic chart from network traffic history.
+       Input: array of {t, rx_bps, tx_bps} */ -}}
+{{- $history := . -}}
+{{- $w := 900.0 -}}
+{{- $h := 200.0 -}}
+{{- $pad := 6.0 -}}
+
+{{- if and $history (gt (len $history) 0) -}}
+  {{- $points := slice -}}
+  {{- $max := 0.0 -}}
+  {{- range $history -}}
+    {{- $total := add (float .rx_bps) (float .tx_bps) -}}
+    {{- if gt $total $max -}}{{- $max = $total -}}{{- end -}}
+    {{- $points = $points | append $total -}}
+  {{- end -}}
+  {{- $range := $max -}}
+  {{- if eq $range 0.0 -}}{{- $range = 1.0 -}}{{- end -}}
+  {{- $count := len $points -}}
+  {{- $coords := slice -}}
+  {{- range $i, $val := $points -}}
+    {{- $x := 0.0 -}}
+    {{- if eq $count 1 -}}
+      {{- $x = div $w 2.0 -}}
+    {{- else -}}
+      {{- $x = div (mul (float $i) $w) (sub (float $count) 1.0) -}}
+    {{- end -}}
+    {{- $y := add $pad (div (mul (sub $max $val) (sub $h (mul $pad 2.0))) $range) -}}
+    {{- $coords = $coords | append (printf "%.1f,%.1f" $x $y) -}}
+  {{- end -}}
+
+<div class="traffic-chart-wrap reveal">
+  <div class="traffic-chart-header">
+    <span class="traffic-chart-title">Network Traffic (24h)</span>
+    <span class="traffic-chart-subtitle">Combined inbound + outbound</span>
+  </div>
+  <div class="traffic-chart-body">
+    <div class="chart-y-axis">
+      <span>{{ partial "fmt-bps.html" $max }}</span>
+      <span>{{ partial "fmt-bps.html" (div $max 2.0) }}</span>
+      <span>0</span>
+    </div>
+    <div class="traffic-chart">
+      <svg viewBox="0 0 900 200" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="traffic-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="chart-area" d="M{{ index $coords 0 }}{{ range $i, $c := $coords }}{{ if gt $i 0 }} L{{ $c }}{{ end }}{{ end }} L{{ (index $coords (sub $count 1)) | replaceRE ",.*" "" }},200 L{{ (index $coords 0) | replaceRE ",.*" "" }},200 Z" fill="url(#traffic-fill)"/>
+        <polyline class="chart-line traffic-combined" points="{{ delimit $coords " " }}"/>
+      </svg>
+    </div>
+  </div>
+  <div class="chart-x-axis">
+    <span>24h ago</span>
+    <span>18h</span>
+    <span>12h</span>
+    <span>6h</span>
+    <span>Now</span>
+  </div>
+</div>
+{{- else -}}
+<div class="traffic-chart-wrap reveal">
+  <div class="traffic-chart-header">
+    <span class="traffic-chart-title">Network Traffic (24h)</span>
+    <span class="traffic-chart-subtitle">Combined inbound + outbound</span>
+  </div>
+  <div class="traffic-chart-body">
+    <div class="chart-y-axis"><span>--</span><span>--</span><span>--</span></div>
+    <div class="traffic-chart">
+      <svg viewBox="0 0 900 200" preserveAspectRatio="none">
+        <polyline class="chart-line traffic-combined" points="0,100 900,100"/>
+      </svg>
+    </div>
+  </div>
+  <div class="chart-x-axis"><span>24h ago</span><span>18h</span><span>12h</span><span>6h</span><span>Now</span></div>
+</div>
+{{- end -}}

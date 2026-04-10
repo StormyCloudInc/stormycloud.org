@@ -1,0 +1,174 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ WHAT WE OFFER ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Infrastructure, Not Promises</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>StormyCloud operates real infrastructure — DNS resolvers, cryptocurrency nodes, network services, and more. We've been doing this since 2021, and we're good at it. Now we're extending that capability to other projects that share our values.</p>
+      <p>If you're building something that advances privacy, open access, or digital rights, we can provide the infrastructure to help you run it. No grants to apply for, no strings attached, no equity conversations. Just servers, bandwidth, and people who know how to keep things running.</p>
+      <p>We're a self-funded 501(c)(3) nonprofit. We do this because it matters.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">What We Provide</h2>
+    </div>
+
+    <div class="docs-grid">
+
+      <!-- Networking -->
+      <div class="doc-card reveal">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="doc-name">Networking</div>
+        <p class="doc-desc">Bandwidth, connectivity, and network infrastructure. We operate our own IP space and can provide dedicated capacity for projects that need reliable, uncensored connectivity.</p>
+      </div>
+
+      <!-- Compute -->
+      <div class="doc-card reveal reveal-d1">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="doc-name">Compute</div>
+        <p class="doc-desc">Servers, virtual machines, and processing power. From lightweight services to resource-intensive workloads, we can allocate what your project needs to run.</p>
+      </div>
+
+      <!-- Storage -->
+      <div class="doc-card reveal reveal-d2">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+        </div>
+        <div class="doc-name">Storage</div>
+        <p class="doc-desc">Persistent data storage and backups. We maintain redundant storage infrastructure and can provide space for repositories, archives, databases, and distributed systems.</p>
+      </div>
+
+      <!-- Infrastructure -->
+      <div class="doc-card reveal">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+            <line x1="6" y1="7" x2="6" y2="7.01"/>
+            <line x1="10" y1="7" x2="10" y2="7.01"/>
+          </svg>
+        </div>
+        <div class="doc-name">Infrastructure</div>
+        <p class="doc-desc">Hosting, deployment, and monitoring. We can run your services alongside ours — same uptime standards, same operational discipline, same infrastructure we trust with our own projects.</p>
+      </div>
+
+      <!-- Consulting -->
+      <div class="doc-card reveal reveal-d1">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="doc-name">Consulting</div>
+        <p class="doc-desc">Technical advisory and architecture guidance. If you're building privacy infrastructure and need experienced eyes on your design, we can help you think through it.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TRACK RECORD ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">We Run What We Build</h2>
+    </div>
+
+    <div class="facts-bar reveal">
+      <div class="fact-item">
+        <div class="fact-num">2021</div>
+        <div class="fact-label">Operating since</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">100+</div>
+        <div class="fact-label">Services Operated</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">500M+</div>
+        <div class="fact-label">Monthly Requests</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">99.7%</div>
+        <div class="fact-label">Uptime</div>
+      </div>
+    </div>
+
+    <div class="i2p-intro reveal" style="margin-top: 40px;">
+      <p>We operate privacy-focused DNS resolvers, full cryptocurrency nodes, network relay infrastructure, public communication services, and monitoring systems across multiple regions.</p>
+      <p>This is the same infrastructure, the same team, and the same operational standards we'd bring to your project.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ WHO THIS IS FOR ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Who This Is For</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="mission-label">Good Fit</div>
+        <p class="mission-text">Privacy-focused projects, anonymity networks, censorship circumvention tools, open source infrastructure, digital rights organizations, and nonprofits working on internet freedom. If your project helps people communicate, access information, or protect their privacy we want to hear from you.</p>
+      </div>
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">How It Works</div>
+        <p class="mission-text">Tell us what you're building and what you need. We'll evaluate requests based on mission alignment, technical feasibility, and available capacity. There's no formal application, just reach out. We're a small team and we prioritize projects where our infrastructure can make the most difference.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ GET IN TOUCH ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Get in Touch</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>If you're working on something that aligns with our mission, reach out. Tell us about your project, what kind of infrastructure support you're looking for, and where you are in development. We'll get back to you.</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 36px;" class="reveal">
+      <a href="/contact" class="btn-outline">Contact Us</a>
+    </div>
+  </div>
+</div>
+{{ end }}

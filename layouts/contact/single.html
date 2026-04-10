@@ -1,0 +1,61 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Reach Out</span>
+      <h2 class="section-title">Get in Touch</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="mission-label">Email</div>
+        <p class="mission-text">For abuse complaints, general inquiries, or partnership requests:</p>
+        <div class="i2p-endpoint" style="margin-top: 16px;">
+          <span class="crypto-ep-label">Abuse</span>
+          <code class="crypto-ep-addr">abuse@stormycloud.org</code>
+        </div>
+        <div class="i2p-endpoint" style="margin-top: 8px;">
+          <span class="crypto-ep-label">Admin</span>
+          <code class="crypto-ep-addr">admin@stormycloud.org</code>
+        </div>
+        <div style="margin-top: 12px;">
+          <a href="/files/public.asc" download style="color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(87,206,248,0.3); font-size: 0.9rem;">Download PGP Key ↓</a>
+        </div>
+      </div>
+
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">Address</div>
+        <p class="mission-text">Our registered mailing address:</p>
+        <div class="i2p-endpoint" style="margin-top: 16px;">
+          <code class="crypto-ep-addr" style="word-break: normal;">StormyCloud Inc<br>5900 Balcones Drive, Suite 25092<br>Austin, TX 78731</code>
+        </div>
+      </div>
+
+      <div class="mission-card reveal">
+        <div class="mission-label">Phone</div>
+        <p class="mission-text">Give us a call during business hours:</p>
+        <div class="i2p-endpoint" style="margin-top: 16px;">
+          <span class="crypto-ep-label">Phone</span>
+          <code class="crypto-ep-addr"><a href="tel:+18022030188" style="color: var(--text-hi); text-decoration: none;">802-203-0188</a></code>
+        </div>
+      </div>
+
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">GitHub</div>
+        <p class="mission-text">Report issues, contribute to our open-source projects, or browse our repositories:</p>
+        <div class="i2p-endpoint" style="margin-top: 16px;">
+          <a href="https://github.com/StormyCloudInc" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(87,206,248,0.3); width: fit-content;">github.com/StormyCloudInc ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

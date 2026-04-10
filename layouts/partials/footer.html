@@ -1,0 +1,63 @@
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-about">
+        <a href="/" class="footer-logo" aria-label="StormyCloud — Home">
+          <img src="/sidelogo.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        </a>
+        <p>A Texas-based 501(c)(3) nonprofit operating critical privacy infrastructure for the I2P network. Free, open, and accountable to the public.</p>
+        <div class="footer-socials">
+          <a href="https://twitter.com/StormyCloudInc" class="social-btn" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://discord.com/invite/McAQBXVg9e" class="social-btn" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://www.instagram.com/stormycloudinc/" class="social-btn" target="_blank" rel="noopener noreferrer">Instagram</a>
+
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>About</h5>
+        <ul>
+          <li><a href="/about#mission">Our Mission</a></li>
+          <li><a href="/about#board">Board Members</a></li>
+          <li><a href="/about#company">Company Info</a></li>
+          <li><a href="/warrant-canary">Warrant Canary</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>I2P</h5>
+        <ul>
+          <li><a href="/i2p">What is I2P?</a></li>
+          <li><a href="/i2p">Outproxy</a></li>
+          <li><a href="/i2p">I2P Services</a></li>
+          <li><a href="/reseed">Reseed Server</a></li>
+          <li><a href="https://checki2p.com" target="_blank" rel="noopener noreferrer">CheckI2P.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Guides</h5>
+        <ul>
+          <li><a href="/install-i2p">Install I2P+ Linux</a></li>
+          <li><a href="/install-i2p-windows">Install I2P+ Windows</a></li>
+          <li><a href="/accessing-i2p">Accessing I2P</a></li>
+          <li><a href="/create-ssh-tunnel">SSH Tunnels</a></li>
+          <li><a href="/creating-and-running-reseed-server">Run a Reseed</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div style="display:flex;align-items:center;gap:24px;">
+        <span class="footer-copy">&copy; 2024 StormyCloud Inc.</span>
+        <span class="nonprofit-tag">501(c)(3) Nonprofit &middot; EIN 87-3282673</span>
+      </div>
+      {{- $canary := site.Data.canary | default dict -}}
+      <a href="/warrant-canary" class="canary{{ if eq $canary.status "lapsed" }} canary--lapsed{{ end }}">
+        <div class="canary-dot"></div>
+        <span class="canary-label">{{ if eq $canary.status "lapsed" }}Warrant Canary Lapsed{{ else }}Warrant Canary Active{{ end }}</span>
+      </a>
+    </div>
+  </div>
+</footer>

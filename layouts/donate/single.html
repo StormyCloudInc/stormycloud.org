@@ -1,0 +1,68 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>Donate to <em>StormyCloud</em></h1>
+    <p class="page-header-sub">Your support funds critical privacy infrastructure that keeps the Internet free and open for everyone.</p>
+  </div>
+</div>
+
+<div class="about-section">
+  <div class="about-inner">
+
+    <div class="donate-columns">
+      <!-- LEFT: Credit / Debit via Fundraise Up -->
+      <div class="donate-col">
+        <h3 class="donate-col-title reveal">Credit / Debit Card</h3>
+        <a href="#XJSGTLGH" style="display:none"></a>
+      </div>
+
+      <!-- RIGHT: Cryptocurrency -->
+      <div class="donate-col">
+        <h3 class="donate-col-title reveal">Cryptocurrency</h3>
+
+        <div class="donate-addr-list">
+          <div class="donate-addr-item reveal">
+            <span class="donate-coin-label">XMR</span>
+            <code class="donate-addr">45Gtj5tkhs4EsbnV7kkhMCRpbZUdqCQqR5qmLFVLAvbFCYaPL4pFbBkEBLJ7beHqkiJxdTBkPwFsT5EMu5jDrYBHPjQzPuv</code>
+            <button class="donate-copy" onclick="copyAddr(this)" data-addr="45Gtj5tkhs4EsbnV7kkhMCRpbZUdqCQqR5qmLFVLAvbFCYaPL4pFbBkEBLJ7beHqkiJxdTBkPwFsT5EMu5jDrYBHPjQzPuv">Copy</button>
+          </div>
+          <div class="donate-addr-item reveal">
+            <span class="donate-coin-label">BTC</span>
+            <code class="donate-addr">1NDRuQNyJZmYK4AJwve1aqa56ntuXpbyA7</code>
+            <button class="donate-copy" onclick="copyAddr(this)" data-addr="1NDRuQNyJZmYK4AJwve1aqa56ntuXpbyA7">Copy</button>
+          </div>
+          <div class="donate-addr-item reveal">
+            <span class="donate-coin-label">ETH</span>
+            <code class="donate-addr">0x07FA04Bd6660dCB8f0C9338F37aBdA67A656CA2F</code>
+            <button class="donate-copy" onclick="copyAddr(this)" data-addr="0x07FA04Bd6660dCB8f0C9338F37aBdA67A656CA2F">Copy</button>
+          </div>
+          <div class="donate-addr-item reveal">
+            <span class="donate-coin-label">LTC</span>
+            <code class="donate-addr">LULvg4mJc9Y37hU3sbVTMxJAPyNwyCJHw6</code>
+            <button class="donate-copy" onclick="copyAddr(this)" data-addr="LULvg4mJc9Y37hU3sbVTMxJAPyNwyCJHw6">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="donate-tax-note reveal">All donations to StormyCloud Inc are tax deductible for US-based donors. EIN: 87-3282673. Receipts are provided automatically with credit/debit card transactions. Receipts for cryptocurrency donations can be provided on request.</p>
+
+    <div class="sponsors-section reveal">
+      <div class="section-header">
+        <h2 class="section-title">Our Sponsors</h2>
+      </div>
+      <div class="sponsors-grid">
+        <a href="https://macarne.com" target="_blank" rel="noopener noreferrer" class="sponsor-logo">
+          <img src="/images/sponsors/macarne_logo_dark-1024x293.png" alt="Macarne" loading="lazy" decoding="async">
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script src="/js/donate.js"></script>
+{{ end }}

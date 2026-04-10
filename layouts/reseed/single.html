@@ -1,0 +1,135 @@
+{{ define "main" }}
+{{ $reseedURL := "https://reseed.stormycloud.org/i2pseeds.su3" }}
+
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ WHAT IS A RESEED? ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">What is a Reseed?</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>I2P is a fully peer-to-peer network. When a router starts up for the first time it has no idea who the other participants are and needs a way to discover its very first set of peers. That bootstrap set is delivered by <strong>reseed servers</strong>: ordinary HTTPS endpoints that hand out a small, cryptographically signed bundle of router identities called an <code>.su3</code> file.</p>
+      <p>Reseeds are only used when a router is brand new, has been offline for a long time, or has lost its peer database. Once a router has enough known peers it never needs to contact a reseed again. That makes reseeds low-volume but absolutely critical infrastructure: without them, no new router can ever join the network.</p>
+      <p>StormyCloud operates one of the handful of public reseed servers that keep I2P reachable for everyone. It is free, requires no registration, and is available over the clearnet from anywhere in the world.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RESEED ENDPOINT ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Reseed Endpoint</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">Public Reseed URL</div>
+          <span class="crypto-status synced">Online</span>
+        </div>
+        <p class="mission-text">All I2P implementations accept reseed URLs ending in <code>.su3</code>. The bundle is signed with our reseed key, which ships with every I2P and I2P+ release, so your router will verify the signature before trusting any of the peers it contains.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">URL</span>
+          <code class="crypto-ep-addr">{{ $reseedURL }}</code>
+        </div>
+      </div>
+
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">Signed SU3 Bundle</div>
+          <span class="crypto-status synced">Verified</span>
+        </div>
+        <p class="mission-text">The <code>.su3</code> format is I2P's standard signed container. Every bundle is signed by our reseed operator key and validated by the router before any peers are added to its NetDB. Unsigned or tampered bundles are rejected.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HOW TO USE ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">How to Use It</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>Most users never need to touch a reseed URL directly. I2P routers ship with a built-in list of reseed servers (including ours) and pick one automatically on first start. You only need to add a reseed manually if the defaults are blocked on your network or you want to force a specific provider.</p>
+    </div>
+
+    <div class="docs-grid">
+      <div class="doc-card reveal">
+        <div class="doc-name">1. Open the router console</div>
+        <p class="doc-desc">Visit <code>http://127.0.0.1:7657</code> in your browser. This is the built-in I2P router console.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d1">
+        <div class="doc-name">2. Go to reseed configuration</div>
+        <p class="doc-desc">Navigate to <strong>Configuration → Reseeding</strong>. You will see the current list of reseed URLs and a box labeled <strong>Reseed from URL</strong>.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d2">
+        <div class="doc-name">3. Paste and reseed</div>
+        <p class="doc-desc">Paste the StormyCloud reseed URL from the endpoint card above into the manual reseed box and click <strong>Reseed</strong>. Your router will fetch, verify, and import the signed bundle.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LEARN MORE ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Learn More</h2>
+    </div>
+
+    <div class="docs-grid">
+      <a class="doc-card reveal" href="https://i2p.net/en/docs/overview/intro/" target="_blank" rel="noopener noreferrer">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+        </div>
+        <div class="doc-name">Introduction to I2P</div>
+        <p class="doc-desc">Official I2P documentation covering how the network works, its architecture, and core concepts.</p>
+        <div class="doc-link">Read docs ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d1" href="https://i2pgit.org/i2p-hackers/reseed-tools" target="_blank" rel="noopener noreferrer">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="doc-name">Run Your Own Reseed</div>
+        <p class="doc-desc">Source code and instructions for operating your own reseed server using the official reseed-tools project.</p>
+        <div class="doc-link">View project ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d2" href="/install-i2p-linux">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="doc-name">Install I2P on Linux</div>
+        <p class="doc-desc">Step-by-step instructions for installing I2P on all major Linux distributions.</p>
+        <div class="doc-link">Read guide ↗</div>
+      </a>
+    </div>
+  </div>
+</div>
+{{ end }}

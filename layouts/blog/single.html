@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="post-outer">
+  <a class="post-back" href="/blog/"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Blog
+  </a>
+
+  <div class="post-header">
+    {{ with index .Params.tags 0 }}<div class="blog-tag">{{ . }}</div>{{ end }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    <div class="post-meta">{{ .Date.Format "January 2, 2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</div>
+  </div>
+  <hr class="post-divider">
+  {{ with .Params.image }}<img class="post-hero-img" src="{{ . }}" alt="{{ $.Title }}" loading="eager" decoding="async">{{ end }}
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

@@ -1,0 +1,12 @@
+{{- $v := printf "%v" . -}}
+{{- if findRE `^[\d.]+([eE][+-]?\d+)?$` $v -}}
+  {{- $b := float $v -}}
+  {{- if ge $b 1e15 -}}{{ printf "%.1f PB" (div $b 1e15) }}
+  {{- else if ge $b 1e12 -}}{{ printf "%.1f TB" (div $b 1e12) }}
+  {{- else if ge $b 1e9 -}}{{ printf "%.1f GB" (div $b 1e9) }}
+  {{- else if ge $b 1e6 -}}{{ printf "%.1f MB" (div $b 1e6) }}
+  {{- else -}}{{ printf "%.0f B" $b }}
+  {{- end -}}
+{{- else -}}
+  {{- $v -}}
+{{- end -}}

@@ -1,0 +1,45 @@
+{{ define "main" }}
+<!-- ══════════════ PAGE HEADER ══════════════ -->
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>The <em>Blog</em></h1>
+    <p class="page-header-sub">Insights on privacy, censorship circumvention, and the open internet — from the StormyCloud team.</p>
+  </div>
+</div>
+
+<!-- ══════════════ BLOG LISTING ══════════════ -->
+<div class="blog-listing">
+
+  {{ $pages := .Pages.ByDate.Reverse }}
+  {{ with index $pages 0 }}
+  <!-- Featured: most recent post -->
+  <a class="blog-featured reveal" href="{{ .RelPermalink }}">
+    {{ with .Params.image }}<img class="blog-featured-img" src="{{ . }}" alt="{{ $.Title }}" loading="eager" decoding="async">{{ end }}
+    <div class="blog-featured-content">
+      <div class="blog-tag">{{ index .Params.tags 0 }}</div>
+      <div class="blog-featured-title">{{ .Title }}</div>
+      <div class="blog-featured-excerpt">{{ .Description }}</div>
+      <div class="blog-featured-meta">{{ .Date.Format "January 2, 2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</div>
+      <div class="blog-featured-cta">Read article →</div>
+    </div>
+  </a>
+  {{ end }}
+
+  <!-- Blog grid: remaining posts -->
+  <div class="blog-grid">
+    {{ range after 1 $pages }}
+    <a class="blog-card reveal" href="{{ .RelPermalink }}">
+      {{ with .Params.image }}<img class="blog-card-img" src="{{ . }}" alt="{{ $.Title }}" loading="lazy" decoding="async">{{ end }}
+      <div class="blog-card-content">
+        <div class="blog-tag">{{ index .Params.tags 0 }}</div>
+        <div class="blog-card-title">{{ .Title }}</div>
+        <div class="blog-card-excerpt">{{ .Description }}</div>
+        <div class="blog-card-meta">{{ .Date.Format "January 2, 2006" }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+</div>
+{{ end }}

@@ -1,0 +1,5 @@
+{{- $id := printf "lb-%d" .Ordinal -}}
+{{- $src := .Destination | safeURL -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+<span class="post-img"><input type="checkbox" id="{{ $id }}" class="post-img-toggle" aria-hidden="true" tabindex="-1"><label for="{{ $id }}" class="post-img-trigger" aria-label="Expand image"><img src="{{ $src }}" alt="{{ $alt }}" loading="lazy" decoding="async"{{ with $title }} title="{{ . }}"{{ end }}></label><label for="{{ $id }}" class="post-img-backdrop" aria-label="Close expanded image"><img src="{{ $src }}" alt="{{ $alt }}" class="post-img-full" loading="lazy" decoding="async"></label></span>

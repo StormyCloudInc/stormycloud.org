@@ -1,0 +1,105 @@
+{{ define "main" }}
+{{- $i2p := index site.Data "i2p-stats" -}}
+{{- $reseed := $i2p.reseed_requests | default dict -}}
+{{- $outproxy := $i2p.outproxy_requests | default dict -}}
+{{- $mail := $i2p.mail_messages | default dict -}}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>I2P <em>Stats</em></h1>
+    <p class="page-header-sub">Live reseed, outproxy, and mail gateway metrics from StormyCloud's I2P infrastructure.</p>
+  </div>
+</div>
+
+<!-- ══════════════ REQUEST VOLUME ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Activity</span>
+      <h2 class="section-title">Request Volume</h2>
+    </div>
+
+    <div class="mission-grid">
+      <!-- Reseed Requests -->
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">Reseed Requests</div>
+        </div>
+        <p class="mission-text">Bootstrap requests from new I2P routers joining the network through our reseed servers.</p>
+        <div class="stats-table">
+          <div class="stats-row">
+            <span class="stats-row-label">24 Hours</span>
+            <span class="stats-row-value">{{ with $reseed.day }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-row-label">7 Days</span>
+            <span class="stats-row-value">{{ with $reseed.week }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-row-label">30 Days</span>
+            <span class="stats-row-value">{{ with $reseed.month }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</span>
+          </div>
+        </div>
+        {{ with $i2p.generated_at }}<div class="card-updated">Updated {{ dateFormat "Jan 2 · 15:04 UTC" (time .) }}</div>{{ end }}
+      </div>
+
+      <!-- Outproxy Requests -->
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">Outproxy Requests</div>
+        </div>
+        <p class="mission-text">Clearnet requests routed through our outproxy, bridging I2P users to the regular internet.</p>
+        <div class="stats-table">
+          <div class="stats-row">
+            <span class="stats-row-label">24 Hours</span>
+            <span class="stats-row-value">{{ with $outproxy.day }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-row-label">7 Days</span>
+            <span class="stats-row-value">{{ with $outproxy.week }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-row-label">30 Days</span>
+            <span class="stats-row-value">{{ with $outproxy.month }}{{ partial "fmt-number.html" . }}{{ else }}--{{ end }}</span>
+          </div>
+        </div>
+        {{ with $i2p.generated_at }}<div class="card-updated">Updated {{ dateFormat "Jan 2 · 15:04 UTC" (time .) }}</div>{{ end }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MAIL GATEWAY ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Mail Gateway</span>
+      <h2 class="section-title">I2P Mail</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">Messages Relayed</div>
+        </div>
+        <p class="mission-text">Messages relayed through the I2P mail gateway between the I2P network and the clearnet.</p>
+        <div class="stats-table">
+          <div class="stats-row">
+            <span class="stats-row-label">24 Hours</span>
+            <span class="stats-row-value">{{ with $mail.day }}{{ $in := printf "%v" .inbound }}{{ $out := printf "%v" .outbound }}{{ if and (findRE `^[\d.]+([eE][+-]?\d+)?$` $in) (findRE `^[\d.]+([eE][+-]?\d+)?$` $out) }}{{ partial "fmt-number.html" (add (float $in) (float $out)) }}{{ else }}--{{ end }}{{ else }}--{{ end }}</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-row-label">7 Days</span>
+            <span class="stats-row-value">{{ with $mail.week }}{{ $in := printf "%v" .inbound }}{{ $out := printf "%v" .outbound }}{{ if and (findRE `^[\d.]+([eE][+-]?\d+)?$` $in) (findRE `^[\d.]+([eE][+-]?\d+)?$` $out) }}{{ partial "fmt-number.html" (add (float $in) (float $out)) }}{{ else }}--{{ end }}{{ else }}--{{ end }}</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-row-label">30 Days</span>
+            <span class="stats-row-value">{{ with $mail.month }}{{ $in := printf "%v" .inbound }}{{ $out := printf "%v" .outbound }}{{ if and (findRE `^[\d.]+([eE][+-]?\d+)?$` $in) (findRE `^[\d.]+([eE][+-]?\d+)?$` $out) }}{{ partial "fmt-number.html" (add (float $in) (float $out)) }}{{ else }}--{{ end }}{{ else }}--{{ end }}</span>
+          </div>
+        </div>
+        {{ with $i2p.generated_at }}<div class="card-updated">Updated {{ dateFormat "Jan 2 · 15:04 UTC" (time .) }}</div>{{ end }}
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

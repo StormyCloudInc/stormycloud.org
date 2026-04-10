@@ -1,0 +1,47 @@
+name: Build and Deploy
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch stats data
+        env:
+          STATS_BASE_URL: ${{ secrets.STATS_BASE_URL }}
+        run: bash scripts/fetch-stats.sh
+
+      - name: Compute warrant canary status
+        run: bash scripts/canary-check.sh
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.147.8'
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Install optimization tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq webp brotli
+          npm install -g csso-cli terser svgo
+
+      - name: Optimize assets
+        run: bash scripts/optimize-assets.sh public
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: stormycloud
+          directory: public

@@ -1,0 +1,7 @@
+[
+  {
+    "allowedOrigins": ["*"],
+    "allowedMethods": ["GET"],
+    "maxAge": 86400
+  }
+]

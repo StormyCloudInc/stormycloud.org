@@ -1,0 +1,38 @@
+{{ define "main" }}
+<div class="guide-outer">
+  {{/* ── Breadcrumb ── */}}
+  <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+    <a href="/guides/">Guides</a>
+    <span class="guide-breadcrumb-sep" aria-hidden="true">/</span>
+    <span>{{ .Title }}</span>
+  </nav>
+
+  <div class="guide-layout{{ if not .TableOfContents }} guide-layout--no-toc{{ end }}">
+    {{/* ── Sidebar TOC ── */}}
+    {{ if .TableOfContents }}
+    <aside class="guide-sidebar" aria-label="Table of contents">
+      <div class="guide-toc">
+        <div class="guide-toc-title">On this page</div>
+        {{ .TableOfContents }}
+      </div>
+    </aside>
+    {{ end }}
+
+    {{/* ── Main content ── */}}
+    <article class="guide-content">
+      <div class="guide-header">
+        {{ with .Params.tag }}<div class="blog-tag">{{ . }}</div>{{ end }}
+        <h1 class="guide-title">{{ .Title }}</h1>
+        {{ with .Description }}<p class="guide-description">{{ . }}</p>{{ end }}
+      </div>
+      <hr class="post-divider">
+      {{ with .Params.image }}
+      <img class="post-hero-img" src="{{ . }}" alt="{{ $.Title }}" loading="eager" decoding="async">
+      {{ end }}
+      <div class="post-body">
+        {{ .Content }}
+      </div>
+    </article>
+  </div>
+</div>
+{{ end }}

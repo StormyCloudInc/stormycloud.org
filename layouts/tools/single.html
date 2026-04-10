@@ -1,0 +1,45 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Utilities</span>
+      <h2 class="section-title">Privacy &amp; Network Tools</h2>
+    </div>
+
+    <div class="docs-grid">
+      <a class="doc-card reveal" href="https://checki2p.com" target="_blank" rel="noopener noreferrer">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="9 11 12 14 22 4"/>
+          </svg>
+        </div>
+        <div class="doc-name">CheckI2P.com</div>
+        <p class="doc-desc">Verify your I2P connection is working properly and check the status of the I2P network.</p>
+        <div class="doc-link">Visit site ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d1" href="https://dnscheck.stormycloud.org" target="_blank" rel="noopener noreferrer">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="doc-name">DNS Leak Test</div>
+        <p class="doc-desc">Check if your DNS queries are leaking outside your VPN or proxy and identify which DNS servers you're using.</p>
+        <div class="doc-link">Visit site ↗</div>
+      </a>
+    </div>
+  </div>
+</div>
+{{ end }}

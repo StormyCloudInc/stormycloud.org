@@ -1,0 +1,94 @@
+{{ define "main" }}
+{{- $net := site.Data.network -}}
+{{- $bw := $net.bandwidth | default dict -}}
+{{- $day := $bw.day | default dict -}}
+{{- $week := $bw.week | default dict -}}
+{{- $month := $bw.month | default dict -}}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>Network <em>Stats</em></h1>
+    <p class="page-header-sub">Real-time bandwidth, reseed, and outproxy metrics from StormyCloud's I2P infrastructure.</p>
+    {{ with $net.generated_at }}<p class="stats-updated">Last updated: {{ dateFormat "January 2, 2006 · 15:04 UTC" (time .) }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ BANDWIDTH ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Bandwidth</span>
+      <h2 class="section-title">Traffic Overview</h2>
+    </div>
+
+    <div class="stats-summary reveal">
+      <div class="stat-card">
+        <div class="stat-period">Last 24 Hours</div>
+        <div class="stat-value">{{ with $day.rx_bytes }}{{ $rx := printf "%v" . }}{{ $tx := printf "%v" $day.tx_bytes }}{{ if and (findRE `^[\d.]+([eE][+-]?\d+)?$` $rx) (findRE `^[\d.]+([eE][+-]?\d+)?$` $tx) }}{{ partial "fmt-bytes.html" (add (float $rx) (float $tx)) }}{{ else }}--{{ end }}{{ else }}--{{ end }}</div>
+        <div class="stat-detail">
+          <span class="stat-rx">&#x25BC; {{ with $day.rx_bytes }}{{ partial "fmt-bytes.html" . }}{{ else }}--{{ end }}</span>
+          <span class="stat-tx">&#x25B2; {{ with $day.tx_bytes }}{{ partial "fmt-bytes.html" . }}{{ else }}--{{ end }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-period">Last 7 Days</div>
+        <div class="stat-value">{{ with $week.rx_bytes }}{{ $rx := printf "%v" . }}{{ $tx := printf "%v" $week.tx_bytes }}{{ if and (findRE `^[\d.]+([eE][+-]?\d+)?$` $rx) (findRE `^[\d.]+([eE][+-]?\d+)?$` $tx) }}{{ partial "fmt-bytes.html" (add (float $rx) (float $tx)) }}{{ else }}--{{ end }}{{ else }}--{{ end }}</div>
+        <div class="stat-detail">
+          <span class="stat-rx">&#x25BC; {{ with $week.rx_bytes }}{{ partial "fmt-bytes.html" . }}{{ else }}--{{ end }}</span>
+          <span class="stat-tx">&#x25B2; {{ with $week.tx_bytes }}{{ partial "fmt-bytes.html" . }}{{ else }}--{{ end }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-period">Last 30 Days</div>
+        <div class="stat-value">{{ with $month.rx_bytes }}{{ $rx := printf "%v" . }}{{ $tx := printf "%v" $month.tx_bytes }}{{ if and (findRE `^[\d.]+([eE][+-]?\d+)?$` $rx) (findRE `^[\d.]+([eE][+-]?\d+)?$` $tx) }}{{ partial "fmt-bytes.html" (add (float $rx) (float $tx)) }}{{ else }}--{{ end }}{{ else }}--{{ end }}</div>
+        <div class="stat-detail">
+          <span class="stat-rx">&#x25BC; {{ with $month.rx_bytes }}{{ partial "fmt-bytes.html" . }}{{ else }}--{{ end }}</span>
+          <span class="stat-tx">&#x25B2; {{ with $month.tx_bytes }}{{ partial "fmt-bytes.html" . }}{{ else }}--{{ end }}</span>
+        </div>
+      </div>
+    </div>
+
+    {{ partial "svg-traffic-chart.html" $net.traffic_history_24h }}
+  </div>
+</div>
+
+<!-- ══════════════ PEERING POLICY ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Interconnection</span>
+      <h2 class="section-title">Peering Policy</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="mission-label">Open Peering</div>
+        <p class="mission-text">StormyCloud maintains an open peering policy. We will peer with any network that meets our requirements, at no cost, on any mutual exchange point or via private interconnection.</p>
+      </div>
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">Requirements</div>
+        <ul class="canary-list">
+          <li>Maintain an active, staffed NOC reachable 24/7</li>
+          <li>Maintain up-to-date PeeringDB records</li>
+          <li>Operate a publicly routed ASN</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mission-grid" style="margin-top: 24px;">
+      <div class="mission-card reveal">
+        <div class="mission-label">Exchange Points</div>
+        <ul class="canary-list">
+          <li>KCIX — Kansas City Internet Exchange</li>
+          <li>SIX — Seattle Internet Exchange</li>
+        </ul>
+      </div>
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">Get in Touch</div>
+        <p class="mission-text">Interested in peering with StormyCloud? Reach out to us at <a href="mailto:admin@stormycloud.org" style="color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(33,134,189,0.3);">admin@stormycloud.org</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ end }}

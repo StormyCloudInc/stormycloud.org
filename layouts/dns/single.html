@@ -1,0 +1,159 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ OVERVIEW ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">What is DNS?</h2>
+    </div>
+
+    <div class="i2p-intro reveal">
+      <p>DNS (the Domain Name System) is the internet's address book. Every time you visit a website, your device queries a DNS resolver to translate the domain name into an IP address your browser can connect to. Most people use their ISP's default DNS, which often logs every site you visit and may censor or filter results.</p>
+      <p>StormyCloud's public DNS resolvers are different. We maintain a strict zero-logging policy and don't record your queries, your IP address, or any identifying information. Our servers support DNSSEC validation to protect against spoofing and tampering, and we never filter or censor results. It's DNS the way it should be: fast, private, and unfiltered.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ENDPOINTS ══════════════ -->
+<div class="about-section about-alt">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">DNS Endpoints</h2>
+    </div>
+
+    <div class="mission-grid">
+      <!-- TCP / UDP -->
+      <div class="mission-card reveal">
+        <div class="i2p-card-header">
+          <div class="mission-label">DNS (TCP / UDP)</div>
+          <span class="crypto-status synced" data-stat="dns_status">Operational</span>
+        </div>
+        <p class="mission-text">Standard DNS resolvers supporting both IPv4 and IPv6. Configure these in your OS network settings or router for instant privacy.</p>
+        <div class="dns-endpoints">
+          <div class="dns-ep-row">
+            <span class="dns-ep-label">IPv4</span>
+            <code class="crypto-ep-addr">23.128.248.2</code>
+            <code class="crypto-ep-addr">23.128.248.4</code>
+          </div>
+          <div class="dns-ep-row">
+            <span class="dns-ep-label">IPv6</span>
+            <code class="crypto-ep-addr">2602:FC05::2</code>
+            <code class="crypto-ep-addr">2602:FC05::4</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- DNS-over-HTTPS -->
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">DNS-over-HTTPS (DoH)</div>
+          <span class="crypto-status synced">Operational</span>
+        </div>
+        <p class="mission-text">Encrypts DNS queries over HTTPS, preventing eavesdropping and man-in-the-middle attacks. Supported natively in most modern browsers and operating systems.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">URL</span>
+          <code class="crypto-ep-addr">https://dns.stormycloud.org/dns-query</code>
+        </div>
+      </div>
+
+      <!-- DNS-over-TLS -->
+      <div class="mission-card reveal reveal-d1">
+        <div class="i2p-card-header">
+          <div class="mission-label">DNS-over-TLS (DoT)</div>
+          <span class="crypto-status synced">Operational</span>
+        </div>
+        <p class="mission-text">Encrypts DNS queries over a dedicated TLS connection on port 853. Widely supported by Android's Private DNS feature, systemd-resolved, and other DNS clients.</p>
+        <div class="i2p-endpoint">
+          <span class="crypto-ep-label">Server</span>
+          <code class="crypto-ep-addr">dns.stormycloud.org:853</code>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FEATURES ══════════════ -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Features</h2>
+    </div>
+
+    <div class="docs-grid">
+      <div class="doc-card reveal">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <div class="doc-name">Zero Logging</div>
+        <p class="doc-desc">We don't log your queries, your IP address, or any identifying information. Your browsing stays private.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d1">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="doc-name">DNSSEC Validation</div>
+        <p class="doc-desc">Cryptographic validation ensures DNS responses haven't been tampered with or spoofed in transit.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d2">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="doc-name">Unfiltered Access</div>
+        <p class="doc-desc">No censorship, no content filtering, no domain blocking. You get the full, unmodified internet.</p>
+      </div>
+
+      <div class="doc-card reveal">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <div class="doc-name">High Performance</div>
+        <p class="doc-desc">Low-latency resolvers built for speed, handling millions of queries with fast response times.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d1">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="doc-name">IPv4 &amp; IPv6</div>
+        <p class="doc-desc">Full dual-stack support so you're covered whether your network runs IPv4, IPv6, or both.</p>
+      </div>
+
+      <div class="doc-card reveal reveal-d2">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="doc-name">Free &amp; Open</div>
+        <p class="doc-desc">Operated by a 501(c)(3) nonprofit. No ads, no upsells, no data harvesting. Just DNS.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

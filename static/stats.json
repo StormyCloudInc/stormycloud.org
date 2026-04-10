@@ -1,0 +1,14 @@
+{
+  "routers":           { "value": "— / —",         "status": "val" },
+  "reseed_requests":   "—",
+  "outproxy":          { "value": "operational",   "status": "ok"  },
+  "outproxy_requests": "—",
+  "uptime_90d":        { "value": "—",             "status": "ok"  },
+  "uptime_30d":        { "value": "—",             "status": "ok"  },
+  "public_dns":        { "value": "online",        "status": "ok"  },
+  "dns_avg_lat":       "—",
+  "dns_requests":      "—",
+  "checki2p":          { "value": "online",        "status": "ok"  },
+  "irc_matrix":        { "value": "online",        "status": "ok"  },
+  "i2p_mail":          { "value": "online",        "status": "ok"  }
+}

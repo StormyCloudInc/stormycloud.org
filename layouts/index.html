@@ -1,0 +1,218 @@
+{{ define "main" }}
+{{- $stats := site.Data.stats -}}
+{{- $sources := $stats.sources | default dict -}}
+{{- $kuma := (index (default dict ($sources.uptime_kuma)) "data") | default dict -}}
+{{- $prom := (index (default dict ($sources.prometheus)) "data") | default dict -}}
+{{- $dns := (index (default dict ($sources.dns)) "data") | default dict -}}
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <h1>Privacy infrastructure<br>for an <em>open</em> internet.</h1>
+    <p class="hero-sub">StormyCloud operates reseed servers, outproxies, and public DNS for the I2P network — free, open, and accountable to the public.</p>
+
+    <div class="terminal-wrap">
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="dot dr"></div>
+          <div class="dot dy"></div>
+          <div class="dot dg"></div>
+          <div class="term-title">stormycloud — network status</div>
+        </div>
+        <div class="term-body">
+          <div>
+            <div><span class="tp">❯ </span><span class="tc">./load_stats.sh</span></div>
+            <br>
+            <div><span class="tp">❯ </span><span class="tc">i2p status</span></div>
+            <br>
+            <div class="term-line"><span class="term-key">I2P Routers</span>{{ with $kuma.i2p_routers_online }}<span class="tok">{{ . }} / {{ $kuma.i2p_routers_total }}</span>{{ else }}<span class="tv">— / —</span>{{ end }}</div>
+            <div class="term-line"><span class="term-key">Reseed Requests (24h)</span>{{ with $prom.reseed_requests_24h }}<span class="tv">{{ partial "fmt-number.html" . }}</span>{{ else }}<span class="tv">—</span>{{ end }}</div>
+            <div class="term-line"><span class="term-key">Outproxy</span>{{ with $kuma.outproxy_status }}{{ $s := lower . }}<span class="{{ if eq $s "operational" }}tok{{ else }}tw{{ end }}">{{ $s }}</span>{{ else }}<span class="tok">operational</span>{{ end }}</div>
+            <div class="term-line"><span class="term-key">Latency (via I2P)</span>{{ with $kuma.outproxy_response_ms }}{{ $rv := printf "%v" . }}{{ if findRE `^[\d.]+([eE][+-]?\d+)?$` $rv }}{{ $fv := float $rv }}{{ if ge $fv 1000.0 }}<span class="tv">{{ printf "%.1fs" (div $fv 1000.0) }}</span>{{ else }}<span class="tv">{{ printf "%.0fms" $fv }}</span>{{ end }}{{ else }}<span class="tv">{{ $rv }}</span>{{ end }}{{ else }}<span class="tv">—</span>{{ end }}</div>
+            <br>
+            <div><span class="tp">❯ </span><span class="tc">uptime</span></div>
+            <br>
+            <div class="term-line"><span class="term-key">Last 90 days</span>{{ with $kuma.uptime_90d_combined }}<span class="tok">{{ printf "%.2f%%" (float .) }}</span>{{ else }}<span class="tv">—</span>{{ end }}</div>
+            <div class="term-line"><span class="term-key">Last 30 days</span>{{ with $kuma.uptime_30d_combined }}<span class="tok">{{ printf "%.2f%%" (float .) }}</span>{{ else }}<span class="tv">—</span>{{ end }}</div>
+          </div>
+          <div>
+            <div><span class="tp">❯ </span><span class="tc">dns status</span></div>
+            <br>
+            <div class="term-line"><span class="term-key">Public DNS</span>{{ with $kuma.dns_status }}{{ $s := lower . }}<span class="{{ if eq $s "operational" }}tok{{ else }}tw{{ end }}">{{ $s }}</span>{{ else }}<span class="tok">operational</span>{{ end }}</div>
+            <div class="term-line"><span class="term-key">DNS Requests (24h)</span>{{ with $dns.total_queries_24h }}<span class="tv">{{ partial "fmt-number.html" . }}</span>{{ else }}<span class="tv">—</span>{{ end }}</div>
+            <br>
+            <div><span class="tp">❯ </span><span class="tc">service status</span></div>
+            <br>
+            <div class="term-line"><span class="term-key">CheckI2P.com</span>{{ with $kuma.checki2p_status }}{{ $s := lower . }}<span class="{{ if eq $s "operational" }}tok{{ else }}tw{{ end }}">{{ if eq $s "operational" }}online{{ else }}{{ $s }}{{ end }}</span>{{ else }}<span class="tok">online</span>{{ end }}</div>
+            <div class="term-line"><span class="term-key">irc.stormycloud</span><span class="tok">online</span></div>
+            <div class="term-line"><span class="term-key">I2P Mail Gateway</span><span class="tok">online</span></div>
+          </div>
+          <div class="term-prompt-line"><span class="tp">❯ </span><span class="cursor"></span>{{ with $stats.generated_at }}<span class="term-updated">Updated {{ dateFormat "Jan 2 · 15:04 UTC" (time .) }}</span>{{ end }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<div class="services-section">
+  <div class="services-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">What we run</span>
+      <h2 class="section-title">Services</h2>
+    </div>
+
+    <div class="service-grid">
+
+      <!-- FEATURED: Reseed + Outproxy -->
+      <a class="service-card featured reveal" href="/i2p">
+        <span class="partner-badge">Official I2P Partner</span>
+        <div class="featured-inner">
+          <div style="display:flex;flex-direction:column;">
+            <div class="svc-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="svc-tag">Core Network</div>
+            <div class="svc-name">I2P Services</div>
+            <div class="svc-desc">Powering the I2P network with reseed servers, outproxy access, and always-on routers that keep the network fast and reliable.</div>
+          </div>
+          <div class="featured-stats">
+            <div class="f-stat">
+              <div class="f-stat-num">25M+</div>
+              <div class="f-stat-label">Outproxy requests per month</div>
+            </div>
+            <div class="f-stat">
+              <div class="f-stat-num">100+</div>
+              <div class="f-stat-label">Active I2P routers</div>
+            </div>
+            <div class="f-stat">
+              <div class="f-stat-num">100+ TB</div>
+              <div class="f-stat-label">I2P traffic routed per month</div>
+            </div>
+            <div class="f-stat">
+              <div class="f-stat-num">{{ with $kuma.uptime_90d_combined }}{{ printf "%.2f%%" (float .) }}{{ else }}—{{ end }}</div>
+              <div class="f-stat-label">Uptime · 90 days</div>
+            </div>
+          </div>
+        </div>
+        <div class="svc-footer" style="justify-content:flex-end;">
+          <span class="svc-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- Public DNS -->
+      <a class="service-card reveal reveal-d1" href="/dns">
+        {{ with $kuma.dns_status }}{{ $s := lower . }}<span class="svc-status{{ if ne $s "operational" }} warn{{ end }}">{{ $s }}</span>{{ else }}<span class="svc-status">operational</span>{{ end }}
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="svc-tag">Free to Use</div>
+        <div class="svc-name">Public DNS</div>
+        <div class="svc-desc">Privacy-first DNS resolvers with zero logging and DNSSEC validation.</div>
+        <div class="svc-dns-servers">
+          <div class="svc-dns-group">
+            <span class="svc-dns-label">TCP / UDP</span>
+            <div class="svc-dns-grid">
+              <span class="svc-dns-addr">23.128.248.2</span>
+              <span class="svc-dns-addr">23.128.248.4</span>
+              <span class="svc-dns-addr">2602:FC05::2</span>
+              <span class="svc-dns-addr">2602:FC05::4</span>
+            </div>
+          </div>
+          <div class="svc-dns-group">
+            <span class="svc-dns-label">DNS-over-HTTPS</span>
+            <span class="svc-dns-addr">dns.stormycloud.org/dns-query</span>
+          </div>
+        </div>
+        <div class="svc-footer" style="justify-content:flex-end;">
+          <span class="svc-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- Crypto Nodes -->
+      <a class="service-card reveal" href="/cryptocurrency">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="svc-tag">Open Access</div>
+        <div class="svc-name">Cryptocurrency Nodes</div>
+        <div class="svc-desc">Full nodes strengthening decentralization across multiple networks, with public RPC endpoints available for developers and the broader community.</div>
+        <div class="svc-footer">
+          <span class="svc-status">Synced</span>
+          <span class="svc-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- ADS-B -->
+      <a class="service-card reveal reveal-d1" href="/adsb">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>
+          </svg>
+        </div>
+        <div class="svc-tag">Community</div>
+        <div class="svc-name">ADS-B Tracking</div>
+        <div class="svc-desc">Real-time aircraft position data contributed to open-source global flight tracking networks. Transparent infrastructure, openly shared data.</div>
+        <div class="svc-footer">
+          <span class="svc-status">Live feed</span>
+          <span class="svc-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- CheckI2P -->
+      <a class="service-card reveal reveal-d2" href="https://checki2p.com" target="_blank" rel="noopener noreferrer">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="svc-tag">Tool</div>
+        <div class="svc-name">CheckI2P.com</div>
+        <div class="svc-desc">A quick diagnostic tool to verify your I2P configuration is correct and that your router is reachable and participating in the network.</div>
+        <div class="svc-footer">
+          <span class="svc-status">Online</span>
+          <span class="svc-arrow">↗</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BLOG ══════════════ -->
+<div class="blog-section">
+  <div class="blog-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Latest</span>
+      <h2 class="section-title">From the blog</h2>
+    </div>
+
+    <div class="blog-grid">
+      {{ range first 3 (where .Site.RegularPages "Section" "blog") }}
+      <a class="blog-card reveal" href="{{ .RelPermalink }}">
+        <span class="blog-tag">{{ index .Params.tags 0 }}</span>
+        <div class="blog-title">{{ .Title }}</div>
+        <div class="blog-excerpt">{{ .Description }}</div>
+        <div class="blog-footer">
+          <span class="blog-date">{{ .Date.Format "Jan 2006" }}</span>
+          <span class="blog-read">Read →</span>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
+    <div class="blog-all reveal">
+      <a href="/blog/" class="btn-outline">View all posts</a>
+    </div>
+  </div>
+</div>
+{{ end }}

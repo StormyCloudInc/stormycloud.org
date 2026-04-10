@@ -1,0 +1,6 @@
+{{- $v := printf "%v" . -}}
+{{- if findRE `^[\d.]+([eE][+-]?\d+)?$` $v -}}
+  {{- lang.FormatNumber 0 (float $v) -}}
+{{- else -}}
+  {{- $v -}}
+{{- end -}}

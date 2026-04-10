@@ -1,0 +1,31 @@
+baseURL = "https://stormycloud.org/"
+languageCode = "en-us"
+title = "StormyCloud Inc"
+
+# Don't generate extra pages Hugo creates by default
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "robotsTXT"]
+
+# Don't pluralize section names in URLs
+pluralizeListTitles = false
+
+# Allow raw HTML in Markdown content files
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3
+  ordered = false
+
+# Aggressive minification
+[minify]
+  disableXML = true
+  minifyOutput = true
+
+[minify.tdewolff.html]
+  keepWhitespace = false
+
+# Clean URLs
+[permalinks]
+  blog = "/blog/:contentbasename/"
+  guides = "/:contentbasename/"

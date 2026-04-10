@@ -1,0 +1,198 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="hero-grid"></div>
+  <div class="page-header-inner">
+    <h1>{{ .Title | safeHTML }}</h1>
+    {{ with .Params.subtitle }}<p class="page-header-sub">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+<!-- ══════════════ MISSION & VISION ══════════════ -->
+<div class="about-section" id="mission">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Mission &amp; Vision</h2>
+    </div>
+
+    <div class="mission-grid">
+      <div class="mission-card reveal">
+        <div class="mission-label">Mission</div>
+        <p class="mission-text">To defend Internet access as a universal human right. By doing so, the group protects users' electronic privacy and builds community by fostering unrestricted access to information and the free exchange of ideas across borders.</p>
+      </div>
+      <div class="mission-card reveal reveal-d1">
+        <div class="mission-label">Vision</div>
+        <p class="mission-text">To lead the way in ensuring universal access to a free and open Internet, recognizing it as a fundamental human right. We are proudly self-funded, independent of government grants, and driven by community support.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ COMPANY INFO ══════════════ -->
+<div class="about-section about-alt" id="company">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Company Info</h2>
+    </div>
+
+    <div class="facts-bar reveal">
+      <div class="fact-item">
+        <div class="fact-num">2021</div>
+        <div class="fact-label">Year founded</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">Texas</div>
+        <div class="fact-label">Incorporated</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">501(c)(3)</div>
+        <div class="fact-label">IRS tax status</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">Self-funded</div>
+        <div class="fact-label">No government grants</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-num">I2P Partner</div>
+        <div class="fact-label">Official designation</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BOARD OF DIRECTORS ══════════════ -->
+<div class="about-section" id="board">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Board of Directors</h2>
+    </div>
+
+    <div class="board-grid">
+
+      <div class="board-card reveal">
+        <div class="board-name">Dustin Fields</div>
+        <div class="board-title">President</div>
+        <p class="board-bio">A digital systems architect with a passion for protecting online privacy. With a background in management and system administration, Dustin skillfully combines leadership and technical expertise to advocate for digital rights.</p>
+      </div>
+
+      <div class="board-card reveal reveal-d1">
+        <div class="board-name">Lambert Lumpkin</div>
+        <div class="board-title">Vice-President</div>
+        <p class="board-bio">An experienced cyber security executive who brings a wealth of experience to the team. His expertise in digital defense strengthens the organization's mission to protect online privacy.</p>
+      </div>
+
+      <div class="board-card reveal reveal-d2">
+        <div class="board-name">Guy McSweeney II</div>
+        <div class="board-title">Secretary</div>
+        <p class="board-bio">A master of organization with a knack for defending digital rights. His meticulous record keeping and efficient management skills ensure the smooth running of the nonprofit.</p>
+      </div>
+
+      <div class="board-card reveal reveal-d3">
+        <div class="board-name">Shane Presnall</div>
+        <div class="board-title">Chief Information Officer</div>
+        <p class="board-bio">A technical visionary who specializes in innovative data protection solutions. With expertise in new technologies and data protection, Shane strengthens the organization's digital infrastructure.</p>
+      </div>
+
+      <div class="board-card reveal">
+        <div class="board-name">Kevin Jeong</div>
+        <div class="board-title">Director of AI &amp; Automation</div>
+        <p class="board-bio">A pioneer in using artificial intelligence to improve digital privacy. Kevin's expertise ensures StormyCloud remains at the forefront of privacy protection technologies.</p>
+      </div>
+
+      <div class="board-card reveal reveal-d1">
+        <div class="board-name">Eyedeekay <span class="board-alias">aka idk</span></div>
+        <div class="board-title">Board Member</div>
+        <p class="board-bio">One of the lead developers and maintainers within the Invisible Internet Project (I2P). Since 2019, he has played a key role in the development and maintenance of many of I2P's core applications.</p>
+      </div>
+
+      <div class="board-card reveal reveal-d2">
+        <div class="board-name">Lance James</div>
+        <div class="board-title">Board Member</div>
+        <p class="board-bio">The original founder of the Invisible IRC Project (IIP), which evolved into the Invisible Internet Project (I2P). A recognized innovator in cybersecurity and privacy, Lance has spent over two decades advancing secure communication systems.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LEGAL DOCUMENTS ══════════════ -->
+<div class="about-section about-alt" id="legal">
+  <div class="about-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title">Legal Documents</h2>
+    </div>
+
+    <div class="docs-grid">
+
+      <a class="doc-card reveal" href="#bylaws">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <div class="doc-name">StormyCloud Inc Bylaws</div>
+        <p class="doc-desc">The governing rules and regulations that define how StormyCloud Inc operates as a nonprofit organization.</p>
+        <div class="doc-link">View document ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d1" href="#formation">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="doc-name">Texas Certificate of Formation</div>
+        <p class="doc-desc">Official state filing certifying StormyCloud Inc as a Texas nonprofit corporation, filed with the Secretary of State.</p>
+        <div class="doc-link">View document ↗</div>
+      </a>
+
+      <a class="doc-card reveal reveal-d2" href="#taxexempt">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="9 11 12 14 22 4"/>
+          </svg>
+        </div>
+        <div class="doc-name">IRS 501(c)(3) Determination Letter</div>
+        <p class="doc-desc">IRS confirmation of StormyCloud's tax-exempt status as a public charity under Section 501(c)(3) of the Internal Revenue Code.</p>
+        <div class="doc-link">View document ↗</div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DOCUMENT MODALS (CSS-only :target) ══════════════ -->
+<div id="bylaws" class="iframe-container">
+  <div class="iframe-wrapper">
+    <div class="iframe-bar">
+      <span class="iframe-title">StormyCloud Inc Bylaws</span>
+      <a href="#" class="iframe-close" title="Close">&#215;</a>
+    </div>
+    <iframe src="/docs/StormyCloudInc_Bylaws.pdf"></iframe>
+  </div>
+</div>
+<div id="formation" class="iframe-container">
+  <div class="iframe-wrapper">
+    <div class="iframe-bar">
+      <span class="iframe-title">Texas Certificate of Formation</span>
+      <a href="#" class="iframe-close" title="Close">&#215;</a>
+    </div>
+    <iframe src="/docs/StormyCloud_Certificate_of_Formation.pdf"></iframe>
+  </div>
+</div>
+<div id="taxexempt" class="iframe-container">
+  <div class="iframe-wrapper">
+    <div class="iframe-bar">
+      <span class="iframe-title">IRS 501(c)(3) Determination Letter</span>
+      <a href="#" class="iframe-close" title="Close">&#215;</a>
+    </div>
+    <iframe src="/docs/IRS_Tax_Exempt.pdf"></iframe>
+  </div>
+</div>
+{{ end }}

@@ -2,7 +2,7 @@
 set -e
 
 # Mirror of main.js canary logic — update this date when renewing the canary
-CANARY_LAST_UPDATED="2025-01-10"
+CANARY_LAST_UPDATED="2026-04-10"
 CANARY_MONTHS="1 4 7 10"
 
 mkdir -p data
